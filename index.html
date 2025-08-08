@@ -1,4 +1,63 @@
-<h1>rgreen.dev is still under construction</h1>
-<p>In the meantime, feel free to get a 
-    <a href="ryan-green-resume.pdf" download="ryan-green-resume.pdf" target="_blank"> copy of my resume </a>
-</p>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ryan Green — Backend Engineer</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Ryan Green — Backend Engineer. FastAPI, Python, Postgres, SQLAlchemy, Pydantic. Based in Mercer Island, WA.">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>Ryan Green</h1>
+      <p class="sub">Backend Engineer — Mercer Island, WA</p>
+      <nav class="links">
+        <a href="mailto:ryan@rgreen.dev">ryan@rgreen.dev</a>
+        <a href="https://github.com/rgreen1207" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/rgreen1207" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="about">
+      <h2>About</h2>
+      <p>
+        I'm a backend engineer with a focus on building reliable, high-throughput services.
+        I work with FastAPI, Python, Postgres, SQLAlchemy and Pydantic to design APIs and data systems
+        that scale. I enjoy solving reliability and performance problems, and shipping well-tested systems.
+      </p>
+    </section>
+
+    <section id="work">
+      <h2>Selected Work</h2>
+      <ul>
+        <li>
+          <strong>WebSocket FastAPI service</strong> — receives nightly JSON batches (~200MB), deduplicates and persists to Postgres with SQLAlchemy, uses multiple caches for consistency.
+        </li>
+        <li>
+          <strong>API design & reliability</strong> — building high-availability carrier and shipping integrations (performance & QA focused).
+        </li>
+      </ul>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <p>Python · FastAPI · SQLAlchemy · Pydantic · PostgreSQL · Docker · CI/CD · Testing · Performance tuning</p>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Based in Mercer Island, WA — <a href="mailto:ryan@rgreen.dev">ryan@rgreen.dev</a></p>
+      <p><a class="btn" href="RyanGreen_Resume.pdf" download>Download Resume (PDF)</a> — place your resume file named <code>RyanGreen_Resume.pdf</code> in the repo root.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Made by Ryan. Hosted on GitHub Pages.</p>
+    </div>
+  </footer>
+</body>
+</html>
