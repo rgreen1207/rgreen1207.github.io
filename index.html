@@ -1,62 +1,77 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ryan Green — Backend Engineer</title>
-  <link rel="stylesheet" href="styles.css">
-  <meta name="description" content="Ryan Green — Backend Engineer. FastAPI, Python, Postgres, SQLAlchemy, Pydantic. Based in Mercer Island, WA.">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Ryan Green — Sr. Backend Engineer</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <header class="site-header">
+  <!-- Hero Section -->
+  <header class="hero">
     <div class="container">
       <h1>Ryan Green</h1>
-      <p class="sub">Backend Engineer — Mercer Island, WA</p>
-      <nav class="links">
-        <a href="mailto:ryan@rgreen.dev">ryan@rgreen.dev</a>
-        <a href="https://github.com/rgreen1207" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://www.linkedin.com/in/rgreen1207" target="_blank" rel="noopener">LinkedIn</a>
-      </nav>
+      <p class="subtitle">Senior Backend Engineer • Seattle, WA</p>
+      <div class="buttons">
+        <a href="mailto:ryan@rgreen.dev" class="btn">Email Me</a>
+        <a href="https://github.com/rgreen1207" target="_blank" class="btn outline">GitHub</a>
+        <a href="https://www.linkedin.com/in/rgreen1207" target="_blank" class="btn outline">LinkedIn</a>
+      </div>
     </div>
   </header>
 
-  <main class="container">
-    <section id="about">
+  <!-- About -->
+  <section id="about" class="fade-in">
+    <div class="container">
       <h2>About</h2>
       <p>
-        I'm a backend engineer with a focus on building reliable, high-throughput services.
-        I work with FastAPI, Python, Postgres, SQLAlchemy and Pydantic to design APIs and data systems
-        that scale. I enjoy solving reliability and performance problems, and shipping well-tested systems.
+        I'm a senior backend engineer specializing in designing and optimizing high-performance
+        APIs and data systems. With extensive experience in FastAPI, Python, PostgreSQL, and AWS,
+        I create scalable solutions that save costs and improve reliability.
       </p>
-    </section>
+    </div>
+  </section>
 
-    <section id="work">
-      <h2>Selected Work</h2>
-      <ul>
-        <li>
-          <strong>WebSocket FastAPI service</strong> — receives nightly JSON batches (~200MB), deduplicates and persists to Postgres with SQLAlchemy, uses multiple caches for consistency.
-        </li>
-        <li>
-          <strong>API design & reliability</strong> — building high-availability carrier and shipping integrations (performance & QA focused).
-        </li>
-      </ul>
-    </section>
-
-    <section id="skills">
-      <h2>Skills</h2>
-      <p>Python · FastAPI · SQLAlchemy · Pydantic · PostgreSQL · Docker · CI/CD · Testing · Performance tuning</p>
-    </section>
-
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Based in Mercer Island, WA — <a href="mailto:ryan@rgreen.dev">ryan@rgreen.dev</a></p>
-      <p><a class="btn" href="RyanGreen_Resume.pdf" download>Download Resume (PDF)</a> — place your resume file named <code>RyanGreen_Resume.pdf</code> in the repo root.</p>
-    </section>
-  </main>
-
-  <footer class="site-footer">
+  <!-- Experience -->
+  <section id="experience" class="fade-in">
     <div class="container">
-      <p>Made by Ryan. Hosted on GitHub Pages.</p>
+      <h2>Experience Highlights</h2>
+      <div class="job">
+        <h3>Backend Engineer — GetCovered <span class="date">2024–Present</span></h3>
+        <ul>
+          <li>Transitioned from costly API to in-house solution, saving $80k/year.</li>
+          <li>Designed architecture, set up EC2 instances, and developed a FastAPI application for address normalization.</li>
+          <li>Built WebSocket-enabled FastAPI service processing ~200MB nightly JSON with Pydantic, SQLAlchemy, and multi-layer caching.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <h3>Backend Python Developer — Blueboard <span class="date">2023</span></h3>
+        <ul>
+          <li>Led a team migrating from WSGI to FastAPI, improving performance by 60%.</li>
+          <li>Implemented AWS Nominatim geolocation server and optimized MariaDB databases by 30%.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="fade-in">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="skill-tags">
+        <span>Python</span><span>FastAPI</span><span>SQLAlchemy</span><span>Pydantic</span>
+        <span>PostgreSQL</span><span>Ruby on Rails</span><span>WebSockets</span>
+        <span>Amazon EC2</span><span>Amazon S3</span><span>Docker</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="fade-in">
+    <div class="container">
+      <p>© 2025 Ryan Green • Hosted on GitHub Pages</p>
     </div>
   </footer>
 </body>
