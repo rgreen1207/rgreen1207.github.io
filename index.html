@@ -145,7 +145,7 @@
       font-family: 'Outfit', sans-serif;
       font-size: clamp(3rem, 7vw, 5.5rem);
       font-weight: 900;
-      line-height: 1.0;
+      line-height: 1.3;
       letter-spacing: -0.01em;
       margin-bottom: 0.5rem;
       background: linear-gradient(110deg, #ffffff 0%, #e2e8f0 40%, #4ade80 100%);
@@ -153,6 +153,7 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       position: relative;
+      overflow: visible;
     }
 
     /* Console prompt prefix on name */
@@ -170,12 +171,13 @@
     .hero-name-cursor {
       display: inline-block;
       width: 3px;
-      height: 0.85em;
+      height: 0.75em;
       background: var(--green);
       margin-left: 4px;
       vertical-align: middle;
       -webkit-text-fill-color: initial;
       animation: blink 0.7s step-end infinite;
+      transition: opacity 0.5s ease;
     }
 
     @keyframes blink {
@@ -805,7 +807,7 @@
         </div>
       </div>
       <div class="hero-actions">
-        <a href="/cdn-cgi/l/email-protection#d6a4afb7b896a4b1a4b3b3b8f8b2b3a0" class="btn-primary">Get In Touch</a>
+        <a href="mailto:ryan@rgreen.dev" class="btn-primary">Get In Touch</a>
         <a href="RyanGreen_Resume.pdf" class="btn-secondary" download>Download Resume</a>
       </div>
       <div class="contact-bar">
@@ -813,9 +815,9 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           (951) 400-1744
         </a>
-        <a href="/cdn-cgi/l/email-protection#65171c040b2517021700000b4b010013" class="contact-link">
+        <a href="mailto:ryan@rgreen.dev" class="contact-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <span class="__cf_email__" data-cfemail="cbb9b2aaa58bb9acb9aeaea5e5afaebd">[email&#160;protected]</span>
+          ryan@rgreen.dev
         </a>
         <a href="https://github.com/rgreen1207" class="contact-link" target="_blank">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -1090,7 +1092,7 @@
       <h2>Let's build something together.</h2>
       <p>Seeking senior backend and distributed systems roles, with a long-term interest in growing into engineering management and technical leadership.</p>
       <div class="cta-buttons">
-        <a href="/cdn-cgi/l/email-protection#dcaea5bdb29caebbaeb9b9b2f2b8b9aa" class="btn-primary"><span class="__cf_email__" data-cfemail="55272c343b1527322730303b7b313023">[email&#160;protected]</span></a>
+        <a href="mailto:ryan@rgreen.dev" class="btn-primary">ryan@rgreen.dev</a>
         <a href="RyanGreen_Resume.pdf" class="btn-secondary" download>Download Resume</a>
         <a href="https://github.com/rgreen1207" class="btn-secondary" target="_blank">GitHub</a>
         <a href="https://linkedin.com/in/rgreen1207" class="btn-secondary" target="_blank">LinkedIn</a>
@@ -1117,11 +1119,11 @@
         i++;
         setTimeout(type, i === 1 ? 200 : 95);
       } else {
-        // Cursor blinks for 1.5s then fades out
+        // Cursor blinks for 1.5s then fades out — use visibility to avoid layout shift
         setTimeout(() => {
-          cursor.style.transition = 'opacity 0.5s ease';
+          cursor.style.animation = 'none';
           cursor.style.opacity = '0';
-          setTimeout(() => cursor.remove(), 500);
+          setTimeout(() => { cursor.style.visibility = 'hidden'; }, 500);
         }, 1500);
       }
     };
