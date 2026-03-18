@@ -96,13 +96,16 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
+      justify-content: center;
       padding: 5.5rem 4rem 4rem;
       overflow: hidden;
+      text-align: center;
     }
 
     .hero-glow {
       position: absolute;
-      top: -200px; right: -200px;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
       width: 700px; height: 700px;
       background: radial-gradient(circle, rgba(74,222,128,0.07) 0%, transparent 70%);
       pointer-events: none;
@@ -112,6 +115,9 @@
       position: relative;
       max-width: 800px;
       z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .hero-eyebrow {
@@ -123,10 +129,12 @@
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.75rem;
     }
 
-    .hero-eyebrow::before {
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
       content: '';
       display: block;
       width: 32px; height: 1px;
@@ -190,6 +198,7 @@
       max-width: 580px;
       line-height: 1.8;
       margin-bottom: 3rem;
+      text-align: center;
     }
 
     .hero-stats {
@@ -205,11 +214,11 @@
     }
 
     .hero-stats-row.row-2 {
-      justify-content: flex-start;
+      justify-content: center;
     }
 
     .hero-stats-row.row-3 {
-      justify-content: flex-start;
+      justify-content: center;
     }
 
     .stat {
@@ -238,6 +247,7 @@
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     /* ── SCROLL INDICATOR ── */
@@ -336,6 +346,7 @@
       gap: 1.5rem;
       margin-top: 3rem;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     .contact-link {
@@ -408,7 +419,6 @@
       background: var(--bg2);
       padding: 2rem;
       position: relative;
-      overflow: hidden;
       transition: background 0.2s;
     }
 
@@ -593,7 +603,6 @@
       border: 1px solid var(--border);
       padding: 2.5rem;
       position: relative;
-      overflow: hidden;
     }
 
     .edu-card::after {
@@ -797,7 +806,7 @@
       </div>
       <div class="hero-actions">
         <a href="/cdn-cgi/l/email-protection#d6a4afb7b896a4b1a4b3b3b8f8b2b3a0" class="btn-primary">Get In Touch</a>
-        <a href="RyanGreen_Resume.pdf" class="btn-secondary" download>Download Resume</a>
+        <a href="RyanGreenResume.pdf" class="btn-secondary" download>Download Resume</a>
       </div>
       <div class="contact-bar">
         <a href="tel:+19514001744" class="contact-link">
@@ -1065,7 +1074,6 @@
   <section id="education">
     <div class="section-label">Education</div>
     <h2 class="section-title">Academic Background</h2>
-  </br>
     <div class="edu-card reveal">
       <div class="edu-school">California State University, Monterey Bay</div>
       <div class="edu-dates">08/2011 — 05/2016</div>
@@ -1080,11 +1088,10 @@
   <div class="cta-section" id="contact">
     <div class="cta-inner reveal">
       <h2>Let's build something together.</h2>
-    </br>
       <p>Seeking senior backend and distributed systems roles, with a long-term interest in growing into engineering management and technical leadership.</p>
       <div class="cta-buttons">
         <a href="/cdn-cgi/l/email-protection#dcaea5bdb29caebbaeb9b9b2f2b8b9aa" class="btn-primary"><span class="__cf_email__" data-cfemail="55272c343b1527322730303b7b313023">[email&#160;protected]</span></a>
-        <a href="RyanGreen_Resume.pdf" class="btn-secondary" download>Download Resume</a>
+        <a href="RyanGreenResume.pdf" class="btn-secondary" download>Download Resume</a>
         <a href="https://github.com/rgreen1207" class="btn-secondary" target="_blank">GitHub</a>
         <a href="https://linkedin.com/in/rgreen1207" class="btn-secondary" target="_blank">LinkedIn</a>
       </div>
