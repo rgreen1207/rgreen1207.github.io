@@ -1,283 +1,1151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ryan Green - Sr. Backend Engineer</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ryan Green — Senior Backend Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@700;800;900&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0d0f14;
+      --bg2:       #13161e;
+      --bg3:       #1a1e28;
+      --border:    #252a38;
+      --green:     #4ade80;
+      --green-dim: #22c55e55;
+      --amber:     #fbbf24;
+      --text:      #e2e8f0;
+      --text-dim:  #8892a4;
+      --text-mute: #4a5568;
+      --mono:      'JetBrains Mono', monospace;
+      --display:   'Syne', sans-serif;
+      --body:      'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(74,222,128,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74,222,128,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+      height: 64px;
+      background: rgba(13,15,20,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--green);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-logo span { color: var(--text-dim); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--green); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 5.5rem 4rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(74,222,128,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 800px;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px; height: 1px;
+      background: var(--green);
+    }
+
+    h1.hero-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(110deg, #ffffff 0%, #e2e8f0 40%, #4ade80 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    /* Console prompt prefix on name */
+    .hero-name-prompt {
+      font-family: var(--mono);
+      font-size: 0.55em;
+      color: var(--green);
+      -webkit-text-fill-color: var(--green);
+      vertical-align: middle;
+      opacity: 0.7;
+      margin-right: 2px;
+    }
+
+    /* Typewriter cursor on name */
+    .hero-name-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 0.85em;
+      background: var(--green);
+      margin-left: 4px;
+      vertical-align: middle;
+      -webkit-text-fill-color: initial;
+      animation: blink 0.7s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-summary {
+      font-size: 16px;
+      color: var(--text-dim);
+      max-width: 580px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .hero-stats-row {
+      display: flex;
+      gap: 3rem;
+    }
+
+    .hero-stats-row.row-2 {
+      justify-content: flex-start;
+    }
+
+    .hero-stats-row.row-3 {
+      justify-content: flex-start;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      min-width: 120px;
+    }
+
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #6b7a90;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .scroll-indicator span {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-mute);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .scroll-mouse {
+      width: 22px; height: 34px;
+      border: 1px solid var(--text-mute);
+      border-radius: 11px;
+      display: flex;
+      justify-content: center;
+      padding-top: 5px;
+    }
+
+    .scroll-mouse::before {
+      content: '';
+      width: 3px; height: 6px;
+      background: var(--green);
+      border-radius: 2px;
+      animation: scroll-bob 1.6s ease-in-out infinite;
+    }
+
+    @keyframes scroll-bob {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50%       { transform: translateY(6px); opacity: 0.3; }
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      background: var(--green);
+      color: #0d0f14;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    }
+
+    .btn-primary:hover {
+      background: #86efac;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      background: transparent;
+      color: var(--text-dim);
+      font-family: var(--mono);
+      font-size: 13px;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    /* ── CONTACT BAR ── */
+    .contact-bar {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+      letter-spacing: 0.04em;
+    }
+
+    .contact-link:hover { color: var(--green); }
+
+    .contact-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* ── SECTION BASE ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px; height: 1px;
+      background: var(--green);
+    }
+
+    h2.section-title {
+      font-family: var(--display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.4;
+      margin-bottom: 3rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ── HIGHLIGHTS ── */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 4rem;
+    }
+
+    .highlight-card {
+      background: var(--bg2);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s;
+    }
+
+    .highlight-card:hover { background: var(--bg3); }
+
+    .highlight-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .highlight-card:hover::before { opacity: 1; }
+
+    .highlight-num {
+      font-family: var(--mono);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .highlight-label {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ── EXPERIENCE ── */
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 0 3rem;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .exp-item:last-child { border-bottom: none; }
+
+    .exp-meta {
+      padding-top: 4px;
+    }
+
+    .exp-company {
+      font-family: var(--display);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .exp-dates {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-mute);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .exp-location {
+      font-size: 12px;
+      color: var(--text-mute);
+    }
+
+    .exp-role {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.2;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .exp-bullets li {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .exp-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-size: 10px;
+      top: 5px;
+    }
+
+    .exp-bullets li strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--green);
+      background: var(--green-dim);
+      padding: 2px 8px;
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(74,222,128,0.2);
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .skill-group {
+      background: var(--bg2);
+      padding: 1.75rem 2rem;
+      transition: background 0.2s;
+    }
+
+    .skill-group:hover { background: var(--bg3); }
+
+    .skill-group-name {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .skill-pill {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      background: var(--bg3);
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .skill-pill:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    /* ── EDUCATION ── */
+    .edu-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .edu-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, var(--green-dim) 0%, transparent 70%);
+    }
+
+    .edu-school {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .edu-dates {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-mute);
+      margin-bottom: 1.25rem;
+    }
+
+    .edu-degree {
+      font-size: 14px;
+      color: var(--text-dim);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .edu-degree:last-child { border-bottom: none; }
+
+    .edu-degree::before {
+      content: '';
+      display: block;
+      width: 6px; height: 6px;
+      background: var(--green);
+      flex-shrink: 0;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-inner {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 4rem;
+      position: relative;
+    }
+
+    .cta-inner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+    }
+
+    .cta-inner h2 {
+      font-family: var(--display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+      line-height: 1.4;
+      position: relative;
+      z-index: 10;
+    }
+
+    .cta-inner p {
+      color: var(--text-dim);
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+      font-size: 15px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer p {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-mute);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 4rem;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      section { padding: 4rem 1.5rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .highlights { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .cta-section { padding: 4rem 1.5rem; }
+      .cta-inner { padding: 2.5rem 1.5rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
-    <div class="floating-shapes">
-        <div class="shape">💻</div>
-        <div class="shape">⚡</div>
-        <div class="shape">🚀</div>
-    </div>
 
-    <div class="container">
-        <header class="header">
-            <div class="profile-section">
-                <div class="profile-img">
-                    <i class="fas fa-code"></i>
-                </div>
-                <div class="profile-text">
-                    <h1 class="name">Ryan Green</h1>
-                    <p class="title">Sr. Backend Engineer</p>
-                </div>
-            </div>
-            <div class="tagline-container">
-                <p class="tagline typing-effect">Problem solver who turns "impossible" into "deployed"</p>
-            </div>
-            <div class="contact-info">
-                <div class="contact-row">
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Seattle, WA
-                    </div>
-                </div>
-                <div class="contact-row">
-                    <a href="tel:+19514001744" class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        (951) 400-1744
-                    </a>
-                    <a href="mailto:ryan@rgreen.dev" class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        ryan@rgreen.dev
-                    </a>
-                </div>
-                <div class="contact-row">
-                    <a href="https://github.com/rgreen1207" class="contact-item" target="_blank">
-                        <i class="fab fa-github"></i>
-                        github.com/rgreen1207
-                    </a>
-                    <a href="https://linkedin.com/in/rgreen1207" class="contact-item" target="_blank">
-                        <i class="fab fa-linkedin"></i>
-                        linkedin.com/in/rgreen1207
-                    </a>
-                </div>
-            </div>
-        </header>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">rgreen<span>.dev</span></div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-        <section class="section fade-in">
-            <h2>Hello! Let me introduce myself</h2>
-            <div class="intro-content">
-                <p class="intro-text">
-                    I'm a passionate Senior Backend Engineer with over <strong>10 years of experience</strong> transforming complex technical challenges into elegant, scalable solutions. My journey in software development has been driven by a simple philosophy: <em>build systems that not only work flawlessly but also save companies significant time and money</em>.
-                </p>
-                
-                <p class="intro-text">
-                    Throughout my career, I've specialized in <strong>high-performance API development</strong>, <strong>database optimization</strong>, and <strong>cost-effective infrastructure design</strong>. I thrive on taking legacy systems and breathing new life into them—whether that's migrating from expensive third-party services to custom in-house solutions or modernizing Python codebases for better performance and security.
-                </p>
-                
-                <p class="intro-text">
-                    Currently based in <strong>Seattle, WA</strong>, I work remotely with teams across the country, bringing a collaborative approach to problem-solving. When I'm not architecting backend systems or mentoring fellow engineers, I enjoy exploring the latest in cloud technologies and contributing to open-source projects.
-                </p>
-                
-                <div class="intro-highlights">
-                    <div class="highlight-item">
-                        <i class="fas fa-lightbulb"></i>
-                        <span>Team leader with experience mentoring engineers to autonomous success</span>
-                    </div>
-                    <div class="highlight-item">
-                        <i class="fas fa-users"></i>
-                        <span>Planner for minimalized tech debt and team success</span>
-                    </div>
-                    <div class="highlight-item">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Performance optimizer focused on real business impact and cost savings</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section fade-in">
-            <h2>Professional Journey</h2>
-            
-            <div class="experience-item">
-                <div class="company">Get Covered</div>
-                <div class="role">Sr. Backend Engineer</div>
-                <div class="date">June 2024 - Present | Remote</div>
-                <ul class="achievements">
-                    <li>Spearheaded migration from Smarty Maps API to self-hosted OpenStreetMap infrastructure, delivering $80K+ annual cost savings through strategic architectural decisions</li>
-                    <li>Engineered high-performance FastAPI application with sub-100ms response times using advanced in-memory caching and PostgreSQL optimization techniques</li>
-                    <li>Architected WebSocket-enabled data processing pipeline handling 200MB+ nightly JSON ingestion with multi-layer caching and intelligent deduplication</li>
-                    <li>Led technical modernization efforts, transitioning from legacy Rails monolith to microservices architecture using Python, FastAPI, and Pydantic</li>
-                </ul>
-            </div>
-
-            <div class="experience-item">
-                <div class="company">Blueboard Inc.</div>
-                <div class="role">Backend Python Developer</div>
-                <div class="date">January 2023 - October 2023 | Remote</div>
-                <ul class="achievements">
-                    <li>Led cross-functional team of 6 engineers through critical WSGI-to-FastAPI migration, achieving 60% performance improvement across all endpoints</li>
-                    <li>Orchestrated comprehensive Python 2.7 to 3.11 upgrade initiative, enhancing security posture and long-term maintainability</li>
-                    <li>Designed and implemented AWS-hosted Nominatim geolocation server, optimizing location-based features and system scalability</li>
-                    <li>Optimized 10+ MariaDB databases using SQLAlchemy ORM patterns, delivering 30% query performance improvement and reduced resource consumption</li>
-                </ul>
-            </div>
-
-            <div class="experience-item">
-                <div class="company">StartEngine</div>
-                <div class="role">Backend Java Developer (Contract)</div>
-                <div class="date">June 2022 - August 2022 | Remote</div>
-                <ul class="achievements">
-                    <li>Successfully migrated critical microservice from Ruby on Rails to Spring Boot within aggressive 2-month timeline</li>
-                    <li>Executed seamless MongoDB-to-PostgreSQL data migration ensuring zero data loss and improved query performance</li>
-                    <li>Developed comprehensive technical documentation for legacy applications, improving team knowledge transfer and onboarding efficiency</li>
-                </ul>
-            </div>
-
-            <div class="experience-item">
-                <div class="company">Fair.com</div>
-                <div class="role">Software Development Engineer in Test (SDET)</div>
-                <div class="date">November 2018 - April 2022 | Santa Monica, CA</div>
-                <ul class="achievements">
-                    <li>Led development of comprehensive 1500+ test automation suite covering frontend website and internal tooling platforms</li>
-                    <li>Successfully transitioned testing infrastructure from Ruby to Python, improving code maintainability and team productivity</li>
-                    <li>Mentored junior engineers with structured onboarding program, achieving autonomous productivity within 6-week timeline</li>
-                    <li>Established CI/CD testing protocols and quality assurance standards adopted across engineering organization</li>
-                </ul>
-            </div>
-
-            <div class="experience-item">
-                <div class="company">Spokeo</div>
-                <div class="role">Software QA Engineer</div>
-                <div class="date">February 2017 - September 2018 | Pasadena, CA</div>
-                <ul class="achievements">
-                    <li>Managed Jenkins infrastructure to execute 400+ automated QA tests for Spokeo API and SEO systems, ensuring consistent product reliability and performance across all releases</li>
-                    <li>Developed comprehensive tooling suite to support developers during regression testing cycles, reducing testing time by 75% and improving accuracy in bug identification</li>
-                    <li>Collaborated with cross-functional teams to establish quality assurance standards and testing protocols for web applications</li>
-                </ul>
-            </div>
-
-            <div class="experience-item">
-                <div class="company">InnovaSystems International, LLC</div>
-                <div class="role">Software QA Engineer</div>
-                <div class="date">August 2015 - December 2016 | San Diego, CA</div>
-                <ul class="achievements">
-                    <li>Partnered with developers and product owners to analyze website performance metrics and identify optimization opportunities for government-use applications</li>
-                    <li>Designed and developed 300+ automated test suites using C# and Microsoft Test Suite, ensuring security and reliability standards for US Government deployments</li>
-                    <li>Implemented comprehensive bug tracking and reporting system using Visual Studio Online, improving team communication and issue resolution time</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="section fade-in">
-            <h2>Technical Expertise</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3><i class="fas fa-code"></i> Backend Frameworks</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Ruby on Rails</span>
-                        <span class="skill-tag">FastAPI</span>
-                        <span class="skill-tag">Django</span>
-                        <span class="skill-tag">Flask</span>
-                        <span class="skill-tag">Java Spring</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3><i class="fas fa-cogs"></i> Backend Technologies</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Websockets</span>
-                        <span class="skill-tag">Pydantic</span>
-                        <span class="skill-tag">SQLAlchemy</span>
-                        <span class="skill-tag">Pandas</span>
-                        <span class="skill-tag">NumPy</span>
-                        <span class="skill-tag">Caching</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3><i class="fas fa-code-branch"></i> Version Control & Collaboration</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">GitHub</span>
-                        <span class="skill-tag">GitLab</span>
-                        <span class="skill-tag">Bitbucket</span>
-                        <span class="skill-tag">JIRA</span>
-                        <span class="skill-tag">Confluence</span>
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-database"></i> Databases & Storage</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">PostgreSQL</span>
-                        <span class="skill-tag">MySQL</span>
-                        <span class="skill-tag">MariaDB</span>
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">GraphQL</span>
-                        <span class="skill-tag">Alembic</span>
-                        <span class="skill-tag">Redis</span>
-                        <span class="skill-tag">Elasticsearch</span>
-                        
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-cloud"></i> Cloud Infrastructure</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">EC2</span>
-                        <span class="skill-tag">S3</span>
-                        <span class="skill-tag">Terraform</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Jenkins</span>
-                        <span class="skill-tag">GitHub Actions</span>
-                        <span class="skill-tag">Datadog</span>
-                        <span class="skill-tag">New Relic</span>
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-vial"></i> Testing & Quality</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Pytest</span>
-                        <span class="skill-tag">Postman</span>
-                        <span class="skill-tag">Swagger/OpenAPI</span>
-                        <span class="skill-tag">Playwright</span>
-                        <span class="skill-tag">Selenium</span>
-                        <span class="skill-tag">Test Automation</span>
-                        <span class="skill-tag">CI/CD</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section fade-in">
-            <h2>Education & Foundation</h2>
-            <div class="experience-item">
-                <div class="company">California State University, Monterey Bay</div>
-                <div class="role">Bachelor of Science - Computer Science & Software Engineering</div>
-                <div class="date">August 2011 - May 2016</div>
-                <ul class="achievements">
-                    <li>Comprehensive curriculum covering algorithms, data structures, software engineering principles, and system design</li>
-                    <li>Hands-on experience with multiple programming languages and development methodologies</li>
-                    <li>Strong foundation in computer science theory and practical application development</li>
-                </ul>
-            </div>
-        </section>
-
-        <div class="cta-section fade-in">
-            <h2>Ready to Scale Your Backend?</h2>
-            <p>I specialize in transforming legacy systems into high-performance, cost-effective solutions. Let's discuss how I can help optimize your infrastructure and save your company significant operational costs.</p>
-            <div class="cta-buttons">
-                <a href="mailto:ryan@rgreen.dev" class="cta-button">
-                    <i class="fas fa-envelope"></i> Let's Connect
-                </a>
-                <a href="RyanGreenResume.pdf" class="cta-button" download>
-                    <i class="fas fa-download"></i> Download Resume
-                </a>
-                <a href="https://github.com/rgreen1207" class="cta-button" target="_blank">
-                    <i class="fab fa-github"></i> View My Code
-                </a>
-                <a href="https://linkedin.com/in/rgreen1207" class="cta-button" target="_blank">
-                    <i class="fab fa-linkedin"></i> Professional Profile
-                </a>
-            </div>
+  <!-- HERO -->
+  <div class="hero" id="about">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Senior Backend Engineer</div>
+      <h1 class="hero-name" id="hero-name"><span class="hero-name-prompt">&#x276F;&nbsp;</span><span id="hero-name-text"></span><span class="hero-name-cursor" id="hero-cursor"></span></h1>
+      <div class="hero-title">Distributed Systems &amp; API Architecture</div>
+      <p class="hero-summary">
+        8+ years designing and building distributed systems, event-driven microservices, and high-throughput data pipelines in Python and FastAPI. Proven track record of modernizing legacy infrastructure, leading engineering teams, and delivering measurable performance and cost improvements at scale.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stats-row row-2">
+          <div class="stat">
+            <span class="stat-num">8+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">$120K</span>
+            <span class="stat-label">Avg Cost Savings<br><span style="font-size:10px;opacity:0.75">per year</span></span>
+          </div>
         </div>
+        <div class="hero-stats-row row-3">
+          <div class="stat">
+            <span class="stat-num">6</span>
+            <span class="stat-label">Apps to Production<br><span style="font-size:10px;opacity:0.75">avg 4–5 months each</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">15</span>
+            <span class="stat-label">Engineers Led<br><span style="font-size:10px;opacity:0.75">across ~3 teams</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">20+</span>
+            <span class="stat-label">Junior Engineers<br><span style="font-size:10px;opacity:0.75">mentored</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="/cdn-cgi/l/email-protection#d6a4afb7b896a4b1a4b3b3b8f8b2b3a0" class="btn-primary">Get In Touch</a>
+        <a href="RyanGreenResume.pdf" class="btn-secondary" download>Download Resume</a>
+      </div>
+      <div class="contact-bar">
+        <a href="tel:+19514001744" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          (951) 400-1744
+        </a>
+        <a href="/cdn-cgi/l/email-protection#65171c040b2517021700000b4b010013" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span class="__cf_email__" data-cfemail="cbb9b2aaa58bb9acb9aeaea5e5afaebd">[email&#160;protected]</span>
+        </a>
+        <a href="https://github.com/rgreen1207" class="contact-link" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          github.com/rgreen1207
+        </a>
+        <a href="https://linkedin.com/in/rgreen1207" class="contact-link" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          linkedin.com/in/rgreen1207
+        </a>
+      </div>
     </div>
-    <script src="script.js"></script>
+    <div class="scroll-indicator">
+      <div class="scroll-mouse"></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- HIGHLIGHTS -->
+  <section id="highlights" style="padding-bottom: 0;">
+    <div class="section-label">Impact at a Glance</div>
+    <h2 class="section-title">Built to perform.<br>Proven to deliver.</h2>
+    <div class="highlights reveal">
+      <div class="highlight-card">
+        <div class="highlight-num">$80K/yr</div>
+        <div class="highlight-label">Saved at Get Covered by replacing a third-party Maps API with a self-hosted OpenStreetMap server on EC2</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-num">&lt;30 min</div>
+        <div class="highlight-label">Processing time for 11M+ daily records, down from ~4 hours, using an event-driven FastAPI + RabbitMQ + Redis pipeline</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-num">$9.5K/mo</div>
+        <div class="highlight-label">Infrastructure savings at Blueboard — self-hosted Nominatim at $500/mo vs. ~$10K/mo for equivalent Google Maps API usage</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-num">60%</div>
+        <div class="highlight-label">API throughput improvement at Blueboard by leading a team of 6 through a WSGI-to-FastAPI architecture migration</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-num">30%</div>
+        <div class="highlight-label">Query performance improvement across 10 MariaDB databases via SQLAlchemy and Pydantic optimizations</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-num">75%</div>
+        <div class="highlight-label">Reduction in misfiled bug reports at Spokeo via a custom cross-browser extension surfacing cache vs. live service ownership</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" style="margin-top: 6rem;"></div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">Work History</div>
+    <h2 class="section-title">Professional Journey</h2>
+
+    <div class="experience-list">
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">Get Covered</div>
+          <div class="exp-dates">06/2024 — Present</div>
+          <div class="exp-location">Remote</div>
+        </div>
+        <div>
+          <div class="exp-role">Senior Backend Engineer</div>
+          <ul class="exp-bullets">
+            <li>Architected and deployed an in-house <strong>OpenStreetMap server on EC2</strong>, replacing a costly third-party Maps API and saving up to <strong>$80K/year</strong>; presented the solution directly to the CTO and independently drove the full migration.</li>
+            <li>Designed and built an <strong>event-driven data deduplication pipeline</strong> using FastAPI, RabbitMQ, Redis, Celery, and PostgreSQL to process daily client imports of <strong>11M+ records</strong> — cutting processing time from ~4 hours to under 30 minutes.</li>
+            <li>Developed a <strong>FastAPI address normalization service</strong> processing all address requests in under <strong>100ms</strong>, leveraging an in-memory cache to eliminate redundant lookups at scale.</li>
+            <li>Created internal <strong>Python microservices</strong> using Pydantic and FastAPI to offload workloads from the legacy Rails monolith, improving system modularity and reducing infrastructure coupling.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">RabbitMQ</span><span class="tag">Redis</span><span class="tag">Celery</span><span class="tag">PostgreSQL</span><span class="tag">OpenStreetMap</span><span class="tag">EC2</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">Blueboard Inc.</div>
+          <div class="exp-dates">01/2023 — 10/2023</div>
+          <div class="exp-location">Remote</div>
+        </div>
+        <div>
+          <div class="exp-role">Senior Backend Engineer</div>
+          <ul class="exp-bullets">
+            <li>Led a team of <strong>6 engineers</strong> to deliver multiple REST APIs; drove the system architecture migration from WSGI to FastAPI, improving API throughput by <strong>60%</strong>, alongside a Python 2.7 → 3.11 upgrade.</li>
+            <li>Deployed a self-hosted <strong>Nominatim + OpenStreetMap service on EC2</strong> delivering Google Maps-quality accuracy at <strong>$500/mo</strong> vs. an estimated $10K/mo for equivalent Google Maps API usage, with 125ms uncached and 10–15ms cached response times.</li>
+            <li>Architected the migration from a legacy Rails monolith to <strong>FastAPI microservices</strong>; introduced GitHub Actions and Githooks for modern CI/CD.</li>
+            <li>Optimized <strong>10 MariaDB databases</strong> using SQLAlchemy and Pydantic, achieving a <strong>30% improvement</strong> in query performance.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Nominatim</span><span class="tag">AWS</span><span class="tag">MariaDB</span><span class="tag">SQLAlchemy</span><span class="tag">CI/CD</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">StartEngine</div>
+          <div class="exp-dates">06/2022 — 08/2022</div>
+          <div class="exp-location">Remote · Contract</div>
+        </div>
+        <div>
+          <div class="exp-role">Backend Java Developer</div>
+          <ul class="exp-bullets">
+            <li>Migrated a microservice from <strong>Ruby on Rails to Spring Boot</strong> in under 2 months, improving system performance and scalability.</li>
+            <li>Led database migration from <strong>MongoDB to PostgreSQL</strong>, preserving data integrity and enabling more efficient relational querying.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">Ruby on Rails</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">Fair.com</div>
+          <div class="exp-dates">11/2018 — 04/2022</div>
+          <div class="exp-location">Santa Monica, CA</div>
+        </div>
+        <div>
+          <div class="exp-role">Software Engineer — Backend &amp; Automation</div>
+          <ul class="exp-bullets">
+            <li>Served as <strong>QA team lead</strong> for a 4-person team embedded with a 7-engineer dev squad within a 150-person engineering org.</li>
+            <li>Designed and built a test automation platform of <strong>1,500+ tests</strong> covering Fair's frontend and two internal tooling systems; migrated the full suite from Ruby/Capybara to <strong>Python/Playwright</strong>.</li>
+            <li>Contributed to backend development on the primary <strong>Flask API and internal FastAPI service</strong>, building and maintaining GraphQL endpoints backed by Snowflake for low-latency car-shopping data delivery.</li>
+            <li>Mentored new engineers to full autonomous productivity within <strong>6 weeks</strong>.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">FastAPI</span><span class="tag">GraphQL</span><span class="tag">Snowflake</span><span class="tag">Playwright</span><span class="tag">Pytest</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">Spokeo</div>
+          <div class="exp-dates">02/2017 — 09/2018</div>
+          <div class="exp-location">Pasadena, CA</div>
+        </div>
+        <div>
+          <div class="exp-role">Software QA Engineer</div>
+          <ul class="exp-bullets">
+            <li>Developed and maintained automated test suites in <strong>Ruby with Capybara and Selenium</strong> covering Spokeo's customer-facing frontend and API within a QA team of 13 engineers.</li>
+            <li>Built a <strong>cross-browser Chrome &amp; Firefox developer extension</strong> that surfaced whether a page was served from cache or live backend, routing bug tickets directly to the responsible team and eliminating a systemic <strong>75% misrouting rate</strong>.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Ruby</span><span class="tag">Capybara</span><span class="tag">Selenium</span><span class="tag">Chrome Extension</span><span class="tag">Firefox Extension</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-meta">
+          <div class="exp-company">InnovaSystems</div>
+          <div class="exp-dates">08/2016 — 12/2016</div>
+          <div class="exp-location">San Diego, CA</div>
+        </div>
+        <div>
+          <div class="exp-role">Software QA Engineer</div>
+          <ul class="exp-bullets">
+            <li>Designed and developed <strong>300 automated security and reliability tests</strong> in C# for a US Department of Defense digital transformation initiative, helping migrate mission-critical operational records from paper-based processes to a secure software system.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">C#</span><span class="tag">DoD</span><span class="tag">Security Testing</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">Technical Stack</div>
+    <h2 class="section-title">Skills &amp; Expertise</h2>
+    <div class="skills-grid reveal">
+      <div class="skill-group">
+        <div class="skill-group-name">Core Expertise</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">FastAPI</span>
+          <span class="skill-pill">Distributed Systems</span>
+          <span class="skill-pill">Event-Driven Architecture</span>
+          <span class="skill-pill">Microservices</span>
+          <span class="skill-pill">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">Frameworks</div>
+        <div class="skill-pills">
+          <span class="skill-pill">FastAPI</span>
+          <span class="skill-pill">Django</span>
+          <span class="skill-pill">Flask</span>
+          <span class="skill-pill">Pydantic</span>
+          <span class="skill-pill">Pandas</span>
+          <span class="skill-pill">Ruby on Rails</span>
+          <span class="skill-pill">Spring Boot</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">Messaging &amp; Cache</div>
+        <div class="skill-pills">
+          <span class="skill-pill">RabbitMQ</span>
+          <span class="skill-pill">Redis</span>
+          <span class="skill-pill">Celery</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">Databases</div>
+        <div class="skill-pills">
+          <span class="skill-pill">PostgreSQL</span>
+          <span class="skill-pill">MySQL</span>
+          <span class="skill-pill">MariaDB</span>
+          <span class="skill-pill">MongoDB</span>
+          <span class="skill-pill">SQLAlchemy</span>
+          <span class="skill-pill">Alembic</span>
+          <span class="skill-pill">GraphQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">Infrastructure</div>
+        <div class="skill-pills">
+          <span class="skill-pill">AWS EC2</span>
+          <span class="skill-pill">AWS S3</span>
+          <span class="skill-pill">Docker</span>
+          <span class="skill-pill">Jenkins</span>
+          <span class="skill-pill">Datadog</span>
+          <span class="skill-pill">New Relic</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">Testing &amp; Tooling</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Pytest</span>
+          <span class="skill-pill">Postman</span>
+          <span class="skill-pill">Swagger</span>
+          <span class="skill-pill">Playwright</span>
+          <span class="skill-pill">Selenium</span>
+          <span class="skill-pill">Capybara</span>
+          <span class="skill-pill">GitHub Actions</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-label">Education</div>
+    <h2 class="section-title">Academic Background</h2>
+  </br>
+    <div class="edu-card reveal">
+      <div class="edu-school">California State University, Monterey Bay</div>
+      <div class="edu-dates">08/2011 — 05/2016</div>
+      <div class="edu-degree">Bachelor of Science in Computer Science — Software Engineering</div>
+      <div class="edu-degree">Bachelor of Science in Computer Science — Video Game Development</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <div class="cta-section" id="contact">
+    <div class="cta-inner reveal">
+      <h2>Let's build something together.</h2>
+    </br>
+      <p>Seeking senior backend and distributed systems roles, with a long-term interest in growing into engineering management and technical leadership.</p>
+      <div class="cta-buttons">
+        <a href="/cdn-cgi/l/email-protection#dcaea5bdb29caebbaeb9b9b2f2b8b9aa" class="btn-primary"><span class="__cf_email__" data-cfemail="55272c343b1527322730303b7b313023">[email&#160;protected]</span></a>
+        <a href="RyanGreenResume.pdf" class="btn-secondary" download>Download Resume</a>
+        <a href="https://github.com/rgreen1207" class="btn-secondary" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/rgreen1207" class="btn-secondary" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Ryan Green &nbsp;·&nbsp; rgreen.dev</p>
+    <p>Seattle, WA &nbsp;·&nbsp; Open to remote roles</p>
+  </footer>
+
+  <script>
+    // ── INLINE NAME TYPEWRITER ──
+    const nameText = document.getElementById('hero-name-text');
+    const cursor   = document.getElementById('hero-cursor');
+    const fullName = 'Ryan Green';
+    let i = 0;
+
+    const type = () => {
+      if (i <= fullName.length) {
+        nameText.textContent = fullName.slice(0, i);
+        i++;
+        setTimeout(type, i === 1 ? 200 : 95);
+      } else {
+        // Cursor blinks for 1.5s then fades out
+        setTimeout(() => {
+          cursor.style.transition = 'opacity 0.5s ease';
+          cursor.style.opacity = '0';
+          setTimeout(() => cursor.remove(), 500);
+        }, 1500);
+      }
+    };
+
+    // Small delay so page is rendered before typing starts
+    setTimeout(type, 300);
+
+    // ── SCROLL REVEAL ──
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ── NAV ACTIVE STATE ──
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--green)' : '';
+      });
+    });
+  </script>
 </body>
 </html>
