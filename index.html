@@ -720,6 +720,24 @@
       color: var(--text-mute);
     }
 
+    .footer-hint {
+      cursor: pointer;
+      opacity: 0.4;
+      transition: opacity 0.2s;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-hint:hover { opacity: 0.9; }
+
+    .footer-hint kbd {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--green);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      background: var(--bg2);
+    }
+
     /* ── DIVIDER ── */
     .divider {
       max-width: 1100px;
@@ -1103,7 +1121,7 @@
   <!-- FOOTER -->
   <footer>
     <p>Ryan Green &nbsp;·&nbsp; rgreen.dev</p>
-    <p>Seattle, WA &nbsp;·&nbsp; Open to remote roles</p>
+    <p class="footer-hint" onclick="toggleCLI()" title="Open terminal">press <kbd>`</kbd> to open terminal</p>
   </footer>
 
   <script>
@@ -1207,6 +1225,69 @@
     }
 
     setTimeout(typeN, 300);
+
+    // retypeWithColor: types "Ryan Green", erases "Green", types color name
+    function retypeWithColor(colorName) {
+      const t      = themes[colorName];
+      const label  = t.label;   // e.g. "Blue"
+      let   phase  = 'typing';  // typing → erasing → retyping
+      let   idx    = 0;
+
+      // Reset cursor
+      cursor.style.visibility = 'visible';
+      cursor.style.opacity    = '1';
+      cursor.style.animation  = 'blink 0.7s step-end infinite';
+      ryanSpan.textContent    = '';
+      greenSpan.textContent   = '';
+      greenSpan.style.removeProperty('-webkit-text-fill-color');
+      greenSpan.style.removeProperty('color');
+
+      const full = fullFirst + fullLast;
+
+      function step() {
+        if (phase === 'typing') {
+          // Type "Ryan Green"
+          if (idx <= full.length) {
+            ryanSpan.textContent  = full.slice(0, Math.min(idx, fullFirst.length));
+            greenSpan.textContent = idx > fullFirst.length ? full.slice(fullFirst.length, idx) : '';
+            idx++;
+            setTimeout(step, idx === 1 ? 150 : 90);
+          } else {
+            // Pause then erase "Green"
+            phase = 'erasing';
+            idx   = fullLast.length;
+            setTimeout(step, 600);
+          }
+        } else if (phase === 'erasing') {
+          if (idx >= 0) {
+            greenSpan.textContent = fullLast.slice(0, idx);
+            idx--;
+            setTimeout(step, 60);
+          } else {
+            // Start retyping the color name
+            phase = 'retyping';
+            idx   = 0;
+            greenSpan.style.setProperty('-webkit-text-fill-color', t.accent);
+            greenSpan.style.color = t.accent;
+            setTimeout(step, 120);
+          }
+        } else if (phase === 'retyping') {
+          if (idx <= label.length) {
+            greenSpan.textContent = label.slice(0, idx);
+            idx++;
+            setTimeout(step, 90);
+          } else {
+            // Done — hide cursor
+            setTimeout(() => {
+              cursor.style.animation  = 'none';
+              cursor.style.opacity    = '0';
+              setTimeout(() => { cursor.style.visibility = 'hidden'; }, 500);
+            }, 1200);
+          }
+        }
+      }
+      step();
+    }
 
     // Click >_ prompt to retype
     document.querySelector('.hero-name-prompt').style.cursor = 'pointer';
@@ -1395,7 +1476,8 @@
         const color = cmd.split(' ')[1];
         if (applyTheme(color)) {
           cliPrint(`✓ Accent color changed to ${themes[color].label}.`, themes[color].accent);
-          cliPrint(`  Ryan's last name is now ${themes[color].label}.`);
+          cliPrint(`  Rewriting name...`);
+          retypeWithColor(color);
         } else {
           cliPrint(`Unknown color: "${color}". Try: green · blue · red · yellow · purple · white · amber`, '#f87171');
         }
@@ -1409,6 +1491,10 @@
       }
     }
 
+    cliEl.addEventListener('click', () => {
+      cliInput.focus();
+    });
+
     cliInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         runCommand(cliInput.value);
@@ -1418,7 +1504,7 @@
       e.stopPropagation();
     });
 
-    function toggleCLI() {
+    window.toggleCLI = function toggleCLI() {
       cliOpen = !cliOpen;
       cliEl.style.display = cliOpen ? 'block' : 'none';
       if (cliOpen) {
