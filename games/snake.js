@@ -1,89 +1,120 @@
-    // ════════════════════════════════════════
-    // SNAKE
-    // ════════════════════════════════════════
-    function launchSnake() {
-      const { canvas, ctx, W, H, hud, cleanup } = createGameCanvas();
-      const SZ = 20;
-      const COLS = Math.floor(W / SZ);
-      const ROWS = Math.floor(H / SZ);
-      const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--green').trim() || '#4ade80';
+// ════════════════════════════════════════
+// SNAKE — hero text as destructible walls
+// ════════════════════════════════════════
+function launchSnake() {
+  const { canvas, ctx, W, H, hud, cleanup } = createGameCanvas();
+  const ACCENT = getAccent();
+  const SZ = 18;
+  const COLS = Math.floor(W / SZ), ROWS = Math.floor(H / SZ);
 
-      // Build walls from hero text elements
-      const walls = new Set();
-      const hero = document.getElementById('about');
-      hero.querySelectorAll('h1,h2,.hero-eyebrow,.hero-title,.stat-num,.stat-label,.btn-primary,.btn-secondary,.contact-link,.hero-name-prompt').forEach(el => {
-        const r = el.getBoundingClientRect();
-        const x1 = Math.floor(r.left / SZ), x2 = Math.ceil(r.right / SZ);
-        const y1 = Math.floor(r.top / SZ),  y2 = Math.ceil(r.bottom / SZ);
-        for (let x = x1; x <= x2; x++) for (let y = y1; y <= y2; y++) walls.add(`${x},${y}`);
-      });
+  // Scrape hero blocks — each becomes a destructible wall cluster
+  const blocks = scrapeHeroBlocks();
+  // Build grid wall map from blocks
+  const wallMap = new Map(); // key -> block reference
+  blocks.forEach(b => {
+    const x1 = Math.floor(b.x / SZ), x2 = Math.ceil((b.x + b.w) / SZ);
+    const y1 = Math.floor(b.y / SZ), y2 = Math.ceil((b.y + b.h) / SZ);
+    for (let gx = x1; gx <= x2; gx++) for (let gy = y1; gy <= y2; gy++) wallMap.set(`${gx},${gy}`, b);
+  });
 
-      let snake = [{x:Math.floor(COLS/2), y:Math.floor(ROWS/2)}];
-      let dir = {x:1,y:0}, nextDir = {x:1,y:0};
-      let score = 0, food = placeFood(), dead = false, speed = 120, lastTime = 0;
+  function isWall(gx, gy) {
+    const b = wallMap.get(`${gx},${gy}`);
+    return b && b.alive;
+  }
 
-      function placeFood() {
-        let f;
-        do { f = {x:Math.floor(Math.random()*COLS), y:Math.floor(Math.random()*ROWS)}; }
-        while (walls.has(`${f.x},${f.y}`) || snake.some(s=>s.x===f.x&&s.y===f.y));
-        return f;
+  function hitWall(gx, gy) {
+    const b = wallMap.get(`${gx},${gy}`);
+    if (b && b.alive) {
+      if (damageBlock(b)) {
+        // Remove all wall cells for this block
+        wallMap.forEach((v, k) => { if (v === b) wallMap.delete(k); });
       }
+      return true;
+    }
+    return false;
+  }
 
-      const keys = (e) => {
-        const m = {ArrowUp:{x:0,y:-1},ArrowDown:{x:0,y:1},ArrowLeft:{x:-1,y:0},ArrowRight:{x:1,y:0},
-                   w:{x:0,y:-1},s:{x:0,y:1},a:{x:-1,y:0},d:{x:1,y:0}};
-        if (m[e.key] && !(m[e.key].x===-dir.x&&m[e.key].y===-dir.y)) { nextDir=m[e.key]; e.preventDefault(); }
-      };
-      document.addEventListener('keydown', keys);
+  // Start snake in a guaranteed clear area at bottom center
+  const startX = Math.floor(COLS / 2), startY = ROWS - 4;
+  let snake = [{ x: startX, y: startY }];
+  let dir = { x: 1, y: 0 }, nextDir = { x: 1, y: 0 };
+  let score = 0, dead = false, speed = 130, lastTime = 0;
+  let food = placeFood();
 
-      function tick(ts) {
-        if (dead) return;
-        if (ts - lastTime < speed) { requestAnimationFrame(tick); return; }
-        lastTime = ts;
-        dir = nextDir;
-        const head = {x: snake[0].x + dir.x, y: snake[0].y + dir.y};
+  function placeFood() {
+    let f, tries = 0;
+    do {
+      f = { x: Math.floor(Math.random() * COLS), y: Math.floor(Math.random() * ROWS) };
+      tries++;
+    } while ((isWall(f.x, f.y) || snake.some(s => s.x === f.x && s.y === f.y)) && tries < 500);
+    return f;
+  }
 
-        // Wall / boundary / self collision
-        if (head.x<0||head.x>=COLS||head.y<0||head.y>=ROWS || walls.has(`${head.x},${head.y}`) || snake.some(s=>s.x===head.x&&s.y===head.y)) {
-          dead = true;
-          document.removeEventListener('keydown', keys);
-          draw();
-          gameOver(ctx, W, H, 'You hit a wall!', score, cleanup, launchSnake);
-          return;
-        }
+  const kH = (e) => {
+    const m = { ArrowUp:{x:0,y:-1}, ArrowDown:{x:0,y:1}, ArrowLeft:{x:-1,y:0}, ArrowRight:{x:1,y:0},
+                w:{x:0,y:-1}, s:{x:0,y:1}, a:{x:-1,y:0}, d:{x:1,y:0} };
+    if (m[e.key] && !(m[e.key].x === -dir.x && m[e.key].y === -dir.y)) {
+      nextDir = m[e.key]; e.preventDefault();
+    }
+  };
+  document.addEventListener('keydown', kH);
 
-        snake.unshift(head);
-        if (head.x===food.x && head.y===food.y) {
-          score += 10; food = placeFood(); speed = Math.max(60, speed - 2);
-        } else { snake.pop(); }
+  function tick(ts) {
+    if (dead) return;
+    if (ts - lastTime < speed) { requestAnimationFrame(tick); return; }
+    lastTime = ts;
+    dir = nextDir;
+    const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
 
-        draw();
-        hud.textContent = `SNAKE  score: ${score}  ↑↓←→ to move`;
-        requestAnimationFrame(tick);
-      }
-
-      function draw() {
-        ctx.fillStyle = '#0d0f14';
-        ctx.fillRect(0, 0, W, H);
-        // Walls
-        walls.forEach(k => {
-          const [x,y] = k.split(',').map(Number);
-          ctx.fillStyle = '#1a1e28';
-          ctx.fillRect(x*SZ, y*SZ, SZ-1, SZ-1);
-        });
-        // Food
-        ctx.fillStyle = '#f87171';
-        ctx.beginPath();
-        ctx.arc(food.x*SZ+SZ/2, food.y*SZ+SZ/2, SZ/2-2, 0, Math.PI*2);
-        ctx.fill();
-        // Snake
-        snake.forEach((s,i) => {
-          ctx.fillStyle = i===0 ? '#ffffff' : ACCENT;
-          ctx.fillRect(s.x*SZ+1, s.y*SZ+1, SZ-2, SZ-2);
-        });
-      }
-
-      requestAnimationFrame(tick);
+    // Boundary check
+    if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) {
+      end('You hit the boundary!'); return;
+    }
+    // Self collision
+    if (snake.some(s => s.x === head.x && s.y === head.y)) {
+      end('You hit yourself!'); return;
+    }
+    // Wall collision — damage block, die
+    if (isWall(head.x, head.y)) {
+      hitWall(head.x, head.y);
+      end('You crashed into your own resume!'); return;
     }
 
-    // ════════════════════════════════════════
+    snake.unshift(head);
+    if (head.x === food.x && head.y === food.y) {
+      score += 10; food = placeFood(); speed = Math.max(55, speed - 3);
+    } else {
+      snake.pop();
+    }
+
+    draw();
+    hud.innerHTML = `SNAKE<br>score: ${score}<br>↑↓←→ / WASD move<br>walls: ${blocks.filter(b=>b.alive).length} left`;
+    requestAnimationFrame(tick);
+  }
+
+  function end(msg) {
+    dead = true;
+    document.removeEventListener('keydown', kH);
+    draw();
+    showGameOver(ctx, W, H, msg, score, cleanup, launchSnake);
+  }
+
+  function draw() {
+    ctx.fillStyle = '#0d0f14'; ctx.fillRect(0, 0, W, H);
+    // Draw hero blocks
+    blocks.forEach(b => drawBlock(ctx, b, ACCENT));
+    // Food
+    ctx.fillStyle = '#f87171';
+    ctx.beginPath();
+    ctx.arc(food.x * SZ + SZ/2, food.y * SZ + SZ/2, SZ/2 - 2, 0, Math.PI * 2);
+    ctx.fill();
+    // Snake
+    snake.forEach((s, i) => {
+      ctx.fillStyle = i === 0 ? '#ffffff' : ACCENT;
+      ctx.fillRect(s.x * SZ + 1, s.y * SZ + 1, SZ - 2, SZ - 2);
+    });
+  }
+
+  draw();
+  requestAnimationFrame(tick);
+}
