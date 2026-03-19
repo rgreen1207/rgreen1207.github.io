@@ -16,6 +16,7 @@
     console.log('%c  → ryan@rgreen.dev', 'color:#4ade80; font-size:12px;');
     console.log('%c  → Press ` to open the terminal', 'color:#4ade80; font-size:12px;');
     console.log('%c  → Try the Konami code ↑↑↓↓←→←→BA', 'color:#4ade80; font-size:12px;');
+    console.log('%c  → Type "arcade" in the terminal for games', 'color:#4ade80; font-size:12px;');
 
     // ════════════════════════════════════════
     // THEME / COLOR ENGINE
@@ -297,14 +298,9 @@
         cliPrint('  theme <color>     — change accent color');
         cliPrint('    colors: green · blue · red · yellow · purple · white · amber');
         cliPrint('  sudo hire ryan    — make a great decision');
+        cliPrint('  arcade            — launch the arcade');
         cliPrint('  clear             — clear terminal');
         cliPrint('  exit              — close terminal');
-        cliPrint('');
-        cliPrint('  games:', '#8892a4');
-        cliPrint('  play snake        — classic snake, text as walls');
-        cliPrint('  play invaders     — space invaders, stats as enemies');
-        cliPrint('  play centipede    — centipede through the page text');
-        cliPrint('  play missile      — missile command, defend your content');
       },
       whoami: () => {
         cliPrint('ryan-green', '#4ade80');
@@ -343,6 +339,19 @@
       },
       clear: () => { cliHistory.innerHTML = ''; },
       exit: () => { toggleCLI(); },
+      arcade: () => {
+        cliPrint('');
+        cliPrint('  ╔══════════════════════════════╗', '#4ade80');
+        cliPrint('  ║       RGREEN.DEV ARCADE      ║', '#4ade80');
+        cliPrint('  ╚══════════════════════════════╝', '#4ade80');
+        cliPrint('');
+        cliPrint('  [1] snake      — classic snake, your resume as walls', '#e2e8f0');
+        cliPrint('  [2] invaders   — space invaders, shoot your own stats', '#e2e8f0');
+        cliPrint('  [3] centipede  — centipede weaves through your skills', '#e2e8f0');
+        cliPrint('  [4] missile    — defend your tech stack from above', '#e2e8f0');
+        cliPrint('');
+        cliPrint('  Type a game name or number to launch.', '#8892a4');
+      },
     };
 
     function runCommand(raw) {
@@ -366,18 +375,19 @@
 
       if (cliCommands[cmd]) {
         cliCommands[cmd]();
-      } else if (cmd.startsWith('play ')) {
-        const game = cmd.split(' ')[1];
-        const games = { snake: launchSnake, invaders: launchInvaders, centipede: launchCentipede, missile: launchMissile };
-        if (games[game]) {
-          cliPrint(`Launching ${game}... press ESC to quit`, '#4ade80');
-          toggleCLI();
-          setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => games[game](), 600); }, 100);
-        } else {
-          cliPrint(`Unknown game: "${game}". Try: snake · invaders · centipede · missile`, '#f87171');
-        }
       } else {
-        cliPrint(`command not found: ${cmd}. Type 'help' for available commands.`, '#f87171');
+        // Game launch — by name or number (works after `arcade` or standalone)
+        const gameMap = { snake: launchSnake, invaders: launchInvaders, centipede: launchCentipede, missile: launchMissile,
+                          '1': launchSnake, '2': launchInvaders, '3': launchCentipede, '4': launchMissile };
+        if (gameMap[cmd]) {
+          const gameName = { snake:'snake',invaders:'invaders',centipede:'centipede',missile:'missile',
+                             '1':'snake','2':'invaders','3':'centipede','4':'missile' }[cmd];
+          cliPrint(`Launching ${gameName}... ESC to quit`, '#4ade80');
+          toggleCLI();
+          setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => gameMap[cmd](), 600); }, 100);
+        } else {
+          cliPrint(`command not found: ${cmd}. Type 'help' for commands or 'arcade' for games.`, '#f87171');
+        }
       }
     }
 
