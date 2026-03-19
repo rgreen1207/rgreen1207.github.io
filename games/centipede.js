@@ -117,19 +117,24 @@ window.launchCentipede = function launchCentipede() {
       }
     }
 
-    // Centipede touches player
-    for(let si=0;si<segs.length;si++) {
-      if(Math.hypot(segs[si].px-ship.px,segs[si].py-ship.py)<SZ*0.8) {
-        lives--;
-        if(lives<=0){end('The centipede got you!');return;}
-        segs=makeCentipede(); break;
-      }
+    // New wave — check immediately after kills so wave spawns without a frame gap
+    if(segs.length===0) {
+      wave++;
+      segSpd=Math.min(segSpd+0.3,3);
+      moveInterval=Math.max(30,moveInterval-6);
+      moveTimer=0;
+      segs=makeCentipede();
     }
 
-    // New wave
-    if(segs.length===0) {
-      wave++; segSpd=Math.min(segSpd+0.3,3); moveInterval=Math.max(30,moveInterval-6);
-      segs=makeCentipede();
+    // Centipede touches player — only check segments that are on-screen
+    for(let si=0;si<segs.length;si++) {
+      const seg=segs[si];
+      if(seg.px<0||seg.px>W) continue; // still scrolling in from off-screen
+      if(Math.hypot(seg.px-ship.px,seg.py-ship.py)<SZ*0.8) {
+        lives--;
+        if(lives<=0){end('The centipede got you!');return;}
+        segs=makeCentipede(); moveTimer=0; break;
+      }
     }
 
     draw();
