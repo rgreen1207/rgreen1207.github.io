@@ -1,7 +1,7 @@
 // ════════════════════════════════════════
 // MISSILE COMMAND
 // ════════════════════════════════════════
-function launchMissile() {
+window.launchMissile = function launchMissile() {
   const { canvas, ctx, W, H, hud, cleanup, state } = createGameCanvas();
   const ACCENT = getAccent();
 
