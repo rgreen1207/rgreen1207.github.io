@@ -112,10 +112,30 @@ window.showGameOver = function(ctx, W, H, msg, score, cleanup, relaunch) {
   ctx.fillStyle = '#4a5568'; ctx.font = "13px 'JetBrains Mono',monospace";
   ctx.fillText('R to restart  ·  ESC to quit', W/2, H/2 + 60);
   ctx.textBaseline = 'alphabetic';
-  const rH = (e) => {
-    if (e.key === 'r' || e.key === 'R') { document.removeEventListener('keydown', rH); cleanup(); relaunch(); }
-  };
+
+  function rH(e) {
+    if (e.key === 'r' || e.key === 'R') {
+      document.removeEventListener('keydown', rH);
+      document.removeEventListener('keydown', escH);
+      cleanup();
+      relaunch();
+    }
+    if (e.key === 'Escape') {
+      document.removeEventListener('keydown', rH);
+      document.removeEventListener('keydown', escH);
+      cleanup();
+    }
+  }
+  // escH is a no-op here — cleanup handles ESC in createGameCanvas,
+  // but we bind it to rH's cleanup path so rH doesn't linger
+  function escH(e) {
+    if (e.key === 'Escape') {
+      document.removeEventListener('keydown', rH);
+      document.removeEventListener('keydown', escH);
+    }
+  }
   document.addEventListener('keydown', rH);
+  document.addEventListener('keydown', escH);
 };
 
 window.gameOver = window.showGameOver;
