@@ -714,6 +714,12 @@
       justify-content: space-between;
     }
 
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
     footer p {
       font-family: var(--mono);
       font-size: 11px;
@@ -763,14 +769,18 @@
     @media (max-width: 768px) {
       nav { padding: 0 1.5rem; }
       .nav-links { display: none; }
-      .hero { padding: 7rem 1.5rem 3rem; }
-      section { padding: 4rem 1.5rem; }
+      .hero { padding: 7rem 2rem 3rem; }
+      section { padding: 4rem 2rem; }
       .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
       .highlights { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: 1fr; }
-      .cta-section { padding: 4rem 1.5rem; }
-      .cta-inner { padding: 2.5rem 1.5rem; }
-      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
+      .cta-section { padding: 4rem 2rem; }
+      .cta-inner { padding: 2.5rem 2rem; }
+      footer { padding: 2rem 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+      .hero-stats-row { flex-wrap: wrap; justify-content: center; gap: 2rem; }
+      h2.section-title { font-size: 1.8rem; }
+      .highlight-card { padding: 1.5rem; }
+      .skill-group { padding: 1.25rem 1.5rem; }
     }
   </style>
 </head>
@@ -1120,7 +1130,10 @@
 
   <!-- FOOTER -->
   <footer>
-    <p>Ryan Green &nbsp;·&nbsp; rgreen.dev</p>
+    <div class="footer-left">
+      <p>Ryan Green &nbsp;·&nbsp; rgreen.dev</p>
+      <p>Seattle, WA &nbsp;·&nbsp; Open to remote roles</p>
+    </div>
     <p class="footer-hint" onclick="toggleCLI()" title="Open terminal">press <kbd>`</kbd> to open terminal</p>
   </footer>
 
@@ -1476,8 +1489,9 @@
         const color = cmd.split(' ')[1];
         if (applyTheme(color)) {
           cliPrint(`✓ Accent color changed to ${themes[color].label}.`, themes[color].accent);
-          cliPrint(`  Rewriting name...`);
-          retypeWithColor(color);
+          cliPrint(`  Updating identity...`, themes[color].accent);
+          setTimeout(() => retypeWithColor(color), 400);
+          setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 200);
         } else {
           cliPrint(`Unknown color: "${color}". Try: green · blue · red · yellow · purple · white · amber`, '#f87171');
         }
