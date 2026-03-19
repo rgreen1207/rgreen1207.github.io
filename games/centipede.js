@@ -9,39 +9,58 @@ window.launchCentipede = function launchCentipede() {
   const ROWS = Math.floor(H / SZ);
   const MAX_WAVE = 32;
   const BASE_SEGS = 10;
+  const MUSH_ZONE_ROWS = Math.floor(ROWS * 0.65); // mushrooms live above this row
 
-  // ── MUSHROOM FIELD from hero blocks ──
+  // ── HERO TEXT — mushroom word list ──
   const rawBlocks = scrapeHeroBlocks();
-  const mushGrid = new Map(); // "gc,gr" -> { gc, gr, text, hp, maxHp, color }
-
+  const wordPool = [];
   rawBlocks.forEach(b => {
-    const words = b.text.split(' ').filter(w => w.length > 0);
-    const wordW = b.w / Math.max(words.length, 1);
-    words.forEach((word, i) => {
-      const gc = Math.round((b.x + i * wordW + wordW / 2) / SZ);
-      const gr = Math.round(b.y / SZ);
-      const maxGr = Math.floor(ROWS * 0.65); // keep mushrooms out of player zone
-      if (gc >= 1 && gc < COLS - 1 && gr >= 1 && gr < maxGr) {
-        const key = `${gc},${gr}`;
-        if (!mushGrid.has(key))
-          mushGrid.set(key, { gc, gr, text: word.slice(0, 5), hp: 2, maxHp: 2, color: b.color });
-      }
-    });
+    b.text.split(' ').filter(w => w.length > 0).forEach(w => wordPool.push(w.slice(0, 5)));
   });
+  // Fallback pool if hero produces nothing
+  const fallbackPool = ['Ryan','Green','FastAPI','Python','Redis','Docker','AWS','SQL','API','dev'];
+  const allWords = wordPool.length >= 10 ? wordPool : fallbackPool;
+
+  // ── MUSHROOM GRID ──
+  let mushGrid = new Map(); // "gc,gr" -> { gc, gr, text, hp, maxHp, color }
+
+  const MUSH_COLORS = ['#4ade80','#60a5fa','#fbbf24','#c084fc','#8892a4'];
+
+  function buildMushrooms(w) {
+    // Keep ☠ mushrooms from killed segments, rebuild the rest fresh each wave
+    const newGrid = new Map();
+    // Copy over ☠ remnants from previous wave
+    mushGrid.forEach((m, key) => { if (m.text === '☠') newGrid.set(key, m); });
+
+    // Scatter ~60 random mushrooms (more each wave up to 100)
+    const count = Math.min(60 + (w - 1) * 3, 100);
+    let placed = 0, tries = 0;
+    while (placed < count && tries < count * 8) {
+      tries++;
+      const gc = 1 + Math.floor(Math.random() * (COLS - 2));
+      const gr = 1 + Math.floor(Math.random() * (MUSH_ZONE_ROWS - 2));
+      const key = `${gc},${gr}`;
+      if (!newGrid.has(key)) {
+        const word = allWords[Math.floor(Math.random() * allWords.length)];
+        const color = MUSH_COLORS[Math.floor(Math.random() * MUSH_COLORS.length)];
+        newGrid.set(key, { gc, gr, text: word, hp: 2, maxHp: 2, color });
+        placed++;
+      }
+    }
+    mushGrid = newGrid;
+  }
 
   // ── WAVE STATE ──
-  let wave = 1;
-  let phase = 'playing'; // 'playing' | 'countdown'
+  let wave = 0;
+  let phase = 'playing';
   let countdownTarget = 0;
 
   function waveSegCount(w) {
-    // Wave 1 = BASE_SEGS, wave 2 = BASE_SEGS+1, ..., capped at MAX_WAVE
     return Math.min(BASE_SEGS + (w - 1), MAX_WAVE);
   }
 
   function waveSpeed(w) {
-    // Starts at 75ms per step, gets faster each wave, floor 22ms
-    return Math.max(22, 75 - (w - 1) * 2);
+    return Math.max(22, 80 - (w - 1) * 2);
   }
 
   // ── CENTIPEDE ──
@@ -49,29 +68,31 @@ window.launchCentipede = function launchCentipede() {
   let moveTimer = 0;
 
   function makeCentipede(n) {
-    // All segments start off the left edge of row 0, head first
+    // Spawn all segments bunched together at the TOP LEFT, already on-screen
+    // Row 0, columns 0..n-1, all moving right
     return Array.from({ length: n }, (_, i) => ({
-      gc: -(i + 1),
+      gc: i,        // start on screen from col 0
       gr: 0,
-      dx: 1, // moving right
-      px: -(i + 1) * SZ + SZ / 2,
+      dx: 1,
+      px: i * SZ + SZ / 2,
       py: SZ / 2,
     }));
   }
 
+  // ── SHIP / BULLETS ──
+  const ship = { px: W / 2, py: H - SZ * 3, spd: 3 };
+  let bullets = [];
+  let score = 0, lives = 3, dead = false;
+  let lastTs = null;
+
   function spawnWave(w) {
     wave = w;
+    buildMushrooms(w);
     segs = makeCentipede(waveSegCount(w));
     moveTimer = 0;
     bullets = [];
     phase = 'playing';
   }
-
-  // ── SHIP ──
-  const ship = { px: W / 2, py: H - SZ * 3, spd: 3 };
-  let bullets = [];
-  let score = 0, lives = 3, dead = false;
-  let lastTs = null;
 
   spawnWave(1);
 
@@ -88,36 +109,31 @@ window.launchCentipede = function launchCentipede() {
   document.addEventListener('keydown', kd);
   document.addEventListener('keyup', ku);
 
-  // ── MUSHROOM HELPERS ──
+  // ── MUSHROOM COLLISION ──
   function mushAt(gc, gr) {
-    // Centipede can pass through mushrooms if the entire row is blocked
-    // to prevent infinite downward spiral — only block if < 80% of row is mushrooms
     const m = mushGrid.get(`${gc},${gr}`);
     return m && m.hp > 0;
   }
 
-  function rowBlockedAhead(gc, gr, dx) {
-    // Check if moving dx from gc hits a wall; if whole row is mushrooms, ignore
+  function blockedAhead(gc, gr, dx) {
     const target = gc + dx;
     if (target < 0 || target >= COLS) return true;
     if (!mushAt(target, gr)) return false;
-    // Count mushrooms in this row — if more than 60% filled, pass through
+    // If more than 55% of this row has mushrooms, pass through to avoid lockup
     let count = 0;
     for (let c = 0; c < COLS; c++) if (mushAt(c, gr)) count++;
-    return count < Math.floor(COLS * 0.6);
+    return count < Math.floor(COLS * 0.55);
   }
 
-  // ── CENTIPEDE MOVEMENT ──
+  // ── MOVEMENT ──
   function moveCentipede(dt) {
     moveTimer += dt;
     const interval = waveSpeed(wave);
     if (moveTimer < interval) return;
     moveTimer = 0;
-
     for (let i = 0; i < segs.length; i++) {
       const seg = segs[i];
-      if (rowBlockedAhead(seg.gc, seg.gr, seg.dx)) {
-        // Drop one row and reverse
+      if (blockedAhead(seg.gc, seg.gr, seg.dx)) {
         seg.gr = Math.min(seg.gr + 1, ROWS - 1);
         seg.dx *= -1;
       } else {
@@ -134,43 +150,47 @@ window.launchCentipede = function launchCentipede() {
     const dt = lastTs === null ? 16 : Math.min(ts - lastTs, 50);
     lastTs = ts;
 
-    // Countdown between waves
+    // ── COUNTDOWN PHASE ──
     if (phase === 'countdown') {
-      draw();
-      const remaining = Math.ceil((countdownTarget - ts) / 1000);
       const nextWave = wave + 1;
-      ctx.fillStyle = 'rgba(13,15,20,0.75)';
+      const remaining = Math.ceil((countdownTarget - ts) / 1000);
+
+      draw();
+      ctx.fillStyle = 'rgba(13,15,20,0.78)';
       ctx.fillRect(0, 0, W, H);
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillStyle = ACCENT;
-      ctx.font = `bold 24px 'JetBrains Mono',monospace`;
-      ctx.fillText(`WAVE ${nextWave}`, W / 2, H / 2 - 55);
-      ctx.font = `bold 96px 'JetBrains Mono',monospace`;
+      ctx.font = `bold 26px 'JetBrains Mono',monospace`;
+      ctx.fillText(`WAVE ${nextWave} INCOMING`, W / 2, H / 2 - 60);
+      ctx.font = `bold 110px 'JetBrains Mono',monospace`;
       ctx.fillText(Math.max(1, remaining), W / 2, H / 2 + 20);
       ctx.fillStyle = '#8892a4';
       ctx.font = `14px 'JetBrains Mono',monospace`;
-      ctx.fillText(`${waveSegCount(nextWave)} segments`, W / 2, H / 2 + 88);
+      ctx.fillText(`${waveSegCount(nextWave)} segments`, W / 2, H / 2 + 95);
       ctx.textBaseline = 'alphabetic';
       hud.innerHTML = `CENTIPEDE<br>score: ${score}<br>lives: ${'♥'.repeat(lives)}<br>next: wave ${nextWave}`;
 
-      if (ts >= countdownTarget) spawnWave(nextWave);
+      if (ts >= countdownTarget) {
+        spawnWave(nextWave);
+      }
       state.rafId = requestAnimationFrame(loop);
       return;
     }
 
-    // Ship movement (lower 35% of screen)
+    // ── PLAYING PHASE ──
+
+    // Ship movement (lower 35%)
     if ((keys['ArrowLeft']  || keys['a']) && ship.px > SZ)       ship.px -= ship.spd;
     if ((keys['ArrowRight'] || keys['d']) && ship.px < W - SZ)   ship.px += ship.spd;
     if ((keys['ArrowUp']    || keys['w']) && ship.py > H * 0.65) ship.py -= ship.spd;
     if ((keys['ArrowDown']  || keys['s']) && ship.py < H - SZ)   ship.py += ship.spd;
 
-    // Move bullets up
+    // Move bullets
     for (let i = bullets.length - 1; i >= 0; i--) {
       bullets[i].y += bullets[i].vy;
       if (bullets[i].y < 0) bullets.splice(i, 1);
     }
 
-    // Collect hit bullet indices (process collisions before removing)
     const hitBullets = new Set();
 
     // Bullet vs mushroom
@@ -187,15 +207,13 @@ window.launchCentipede = function launchCentipede() {
 
     moveCentipede(dt);
 
-    // Bullet vs centipede segment
+    // Bullet vs centipede
     for (let bi = 0; bi < bullets.length; bi++) {
       if (hitBullets.has(bi)) continue;
       const b = bullets[bi];
       for (let si = segs.length - 1; si >= 0; si--) {
         const seg = segs[si];
-        if (seg.px < -SZ || seg.px > W + SZ) continue; // off-screen
         if (Math.hypot(b.x - seg.px, b.y - seg.py) < SZ * 0.75) {
-          // Killed segment becomes a mushroom
           mushGrid.set(`${seg.gc},${seg.gr}`, {
             gc: seg.gc, gr: seg.gr, text: '☠', hp: 1, maxHp: 1, color: '#f87171'
           });
@@ -207,15 +225,13 @@ window.launchCentipede = function launchCentipede() {
       }
     }
 
-    // Remove hit bullets (reverse order)
+    // Remove hit bullets (reverse order to preserve indices)
     [...hitBullets].sort((a, b) => b - a).forEach(i => bullets.splice(i, 1));
 
     // Wave complete
     if (segs.length === 0) {
       if (wave >= MAX_WAVE) {
-        // Player beat all 32 waves
-        drawVictory();
-        return;
+        drawVictory(); return;
       }
       phase = 'countdown';
       countdownTarget = ts + 3000;
@@ -223,14 +239,12 @@ window.launchCentipede = function launchCentipede() {
       return;
     }
 
-    // Centipede touches player (on-screen only)
+    // Centipede touches player
     for (let si = 0; si < segs.length; si++) {
       const seg = segs[si];
-      if (seg.px < 0 || seg.px > W) continue;
       if (Math.hypot(seg.px - ship.px, seg.py - ship.py) < SZ * 0.85) {
         lives--;
         if (lives <= 0) { end('The centipede got you!'); return; }
-        // Respawn centipede for this wave, keep score and mushrooms
         segs = makeCentipede(waveSegCount(wave));
         moveTimer = 0;
         bullets = [];
@@ -240,7 +254,7 @@ window.launchCentipede = function launchCentipede() {
 
     draw();
     const n = waveSegCount(wave);
-    hud.innerHTML = `CENTIPEDE<br>score: ${score}<br>lives: ${'♥'.repeat(lives)}<br>wave: ${wave}/${MAX_WAVE}<br>${n} segments<br>↑↓←→ · SPACE fire`;
+    hud.innerHTML = `CENTIPEDE<br>score: ${score}<br>lives: ${'♥'.repeat(lives)}<br>wave: ${wave}/${MAX_WAVE}<br>${n} segs<br>↑↓←→ · SPACE fire`;
     state.rafId = requestAnimationFrame(loop);
   }
 
@@ -255,7 +269,6 @@ window.launchCentipede = function launchCentipede() {
   function draw() {
     ctx.fillStyle = '#0d0f14'; ctx.fillRect(0, 0, W, H);
 
-    // Player zone line
     ctx.strokeStyle = '#252a38'; ctx.lineWidth = 1; ctx.setLineDash([4, 6]);
     ctx.beginPath(); ctx.moveTo(0, H * 0.65); ctx.lineTo(W, H * 0.65); ctx.stroke();
     ctx.setLineDash([]);
@@ -276,9 +289,8 @@ window.launchCentipede = function launchCentipede() {
       ctx.globalAlpha = 1; ctx.textBaseline = 'alphabetic';
     });
 
-    // Centipede segments
+    // Centipede
     segs.forEach((seg, i) => {
-      if (seg.px < -SZ || seg.px > W + SZ) return;
       ctx.fillStyle = i === 0 ? '#ffffff' : ACCENT;
       ctx.beginPath(); ctx.arc(seg.px, seg.py, SZ / 2 - 1, 0, Math.PI * 2); ctx.fill();
       if (i === 0) {
@@ -297,10 +309,7 @@ window.launchCentipede = function launchCentipede() {
     ctx.closePath(); ctx.fill();
 
     // Bullets
-    bullets.forEach(b => {
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(b.x - 2, b.y - 7, 4, 14);
-    });
+    bullets.forEach(b => { ctx.fillStyle = '#ffffff'; ctx.fillRect(b.x - 2, b.y - 7, 4, 14); });
   }
 
   function drawVictory() {
