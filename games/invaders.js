@@ -1,7 +1,7 @@
 // ════════════════════════════════════════
 // SPACE INVADERS — personal info as invaders
 // ════════════════════════════════════════
-function launchInvaders() {
+window.launchInvaders = function launchInvaders() {
   const { canvas, ctx, W, H, hud, cleanup, state } = createGameCanvas();
   const ACCENT = getAccent();
 
