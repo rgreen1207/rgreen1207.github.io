@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — rgreen.dev</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0d0f14;
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(74,222,128,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74,222,128,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    .terminal {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      background: #13161e;
+      border: 1px solid #252a38;
+      padding: 2.5rem;
+    }
+    .terminal::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #f87171, transparent);
+    }
+    .error-code {
+      font-size: clamp(4rem, 15vw, 8rem);
+      font-weight: 700;
+      color: #f87171;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.04em;
+    }
+    .error-label {
+      font-size: 11px;
+      color: #f87171;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0.7;
+    }
+    .divider {
+      height: 1px;
+      background: #252a38;
+      margin-bottom: 2rem;
+    }
+    .log-line {
+      font-size: 12px;
+      line-height: 2;
+      color: #4a5568;
+    }
+    .log-line .ts  { color: #4a5568; }
+    .log-line .err { color: #f87171; }
+    .log-line .ok  { color: #4ade80; }
+    .log-line .dim { color: #6b7a90; }
+    .prompt-line {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      font-size: 13px;
+    }
+    .prompt-label { color: #4ade80; }
+    a.home-link {
+      color: #4ade80;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(74,222,128,0.3);
+      transition: border-color 0.2s;
+    }
+    a.home-link:hover { border-color: #4ade80; }
+    .cursor {
+      display: inline-block;
+      width: 8px; height: 1em;
+      background: #4ade80;
+      vertical-align: middle;
+      animation: blink 0.7s step-end infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal">
+    <div class="error-code">404</div>
+    <div class="error-label">Page not found</div>
+    <div class="divider"></div>
+    <div class="log-line"><span class="ts">[ERROR]</span> <span class="err">ENOENT: no such file or directory</span></div>
+    <div class="log-line"><span class="ts">[ERROR]</span> <span class="err">Route not found in production build</span></div>
+    <div class="log-line"><span class="ts">[INFO ]</span> <span class="dim">Request logged. Moving on.</span></div>
+    <div class="log-line"><span class="ts">[INFO ]</span> <span class="dim">Checked cache... nothing.</span></div>
+    <div class="log-line"><span class="ts">[INFO ]</span> <span class="dim">Checked database... still nothing.</span></div>
+    <div class="log-line"><span class="ts">[WARN ]</span> <span class="dim">This endpoint does not exist and never did.</span></div>
+    <div class="log-line"><span class="ts">[INFO ]</span> <span class="ok">Suggestion: return to a known good state.</span></div>
+    <div class="prompt-line">
+      <span class="prompt-label">rgreen@dev:~$</span>
+      <span>cd <a href="/" class="home-link">~/home</a></span>
+      <span class="cursor"></span>
+    </div>
+  </div>
+</body>
+</html>
