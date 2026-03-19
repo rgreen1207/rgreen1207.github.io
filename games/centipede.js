@@ -25,7 +25,7 @@ window.launchCentipede = function launchCentipede() {
   });
 
   // Centipede — spawns at TOP-LEFT, moves RIGHT across top row
-  const SEG_N = 12;
+  const SEG_N = 18;
   function makeCentipede() {
     // Start segments off the left edge at row 0, spaced apart
     return Array.from({length:SEG_N},(_,i)=>({
