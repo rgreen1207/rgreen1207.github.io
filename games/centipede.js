@@ -67,13 +67,13 @@ window.launchCentipede = function launchCentipede() {
     phase = 'playing';
   }
 
-  spawnWave(1);
-
   // ── SHIP ──
   const ship = { px: W / 2, py: H - SZ * 3, spd: 3 };
   let bullets = [];
   let score = 0, lives = 3, dead = false;
   let lastTs = null;
+
+  spawnWave(1);
 
   const keys = {};
   const kd = (e) => {
