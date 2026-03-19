@@ -80,9 +80,13 @@ window.launchInvaders = function launchInvaders() {
     alive.forEach(inv=>{ inv.x+=invDir*invSpd; if(inv.x-inv.w/2<30||inv.x+inv.w/2>W-30) edge=true; });
     if(edge) { invDir*=-1; alive.forEach(inv=>inv.y+=18); invSpd=Math.min(invSpd+0.04,2.5); }
 
-    if(ts-lastEnemyShot>900&&alive.length) {
-      const shooter=alive[Math.floor(Math.random()*alive.length)];
-      enemyBullets.push({x:shooter.x,y:shooter.y+shooter.h/2+4,vy:5+Math.random()*2});
+    if(ts-lastEnemyShot>700&&alive.length) {
+      // Fire from 1-3 random shooters at once depending on how many are left
+      const numShooters = Math.min(3, Math.max(1, Math.floor(alive.length / 5)));
+      const shuffled = [...alive].sort(()=>Math.random()-0.5).slice(0, numShooters);
+      shuffled.forEach(shooter => {
+        enemyBullets.push({x:shooter.x,y:shooter.y+shooter.h/2+4,vy:5+Math.random()*2});
+      });
       lastEnemyShot=ts;
     }
 
@@ -105,7 +109,7 @@ window.launchInvaders = function launchInvaders() {
 
     // Enemy bullet vs ship
     for(let bi=enemyBullets.length-1;bi>=0;bi--) {
-      if(Math.hypot(enemyBullets[bi].x-ship.x,enemyBullets[bi].y-ship.y)<20) {
+      if(Math.hypot(enemyBullets[bi].x-ship.x,enemyBullets[bi].y-ship.y)<26) {
         lives--; enemyBullets.splice(bi,1);
         if(lives<=0){end('You got destroyed!');return;}
       }
@@ -158,7 +162,7 @@ window.launchInvaders = function launchInvaders() {
     ctx.fillStyle='#ffffff'; ctx.beginPath(); ctx.arc(ship.x,ship.y-8,4,0,Math.PI*2); ctx.fill();
 
     bullets.forEach(b=>{ctx.fillStyle='#ffffff';ctx.fillRect(b.x-2,b.y-8,4,16);});
-    enemyBullets.forEach(b=>{ctx.fillStyle='#f87171';ctx.fillRect(b.x-2,b.y-6,4,12);});
+    enemyBullets.forEach(b=>{ctx.fillStyle='#f87171';ctx.fillRect(b.x-4,b.y-8,8,16);});
   }
 
   function drawWin() {
