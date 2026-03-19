@@ -1,7 +1,7 @@
 // ════════════════════════════════════════
 // CENTIPEDE
 // ════════════════════════════════════════
-function launchCentipede() {
+window.launchCentipede = function launchCentipede() {
   const { canvas, ctx, W, H, hud, cleanup, state } = createGameCanvas();
   const ACCENT = getAccent();
   const SZ = 20;
