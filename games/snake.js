@@ -76,26 +76,32 @@ window.launchSnake = function launchSnake() {
   function draw() {
     ctx.fillStyle='#0d0f14'; ctx.fillRect(0,0,W,H);
 
-    // Draw wall blocks — each block gets a solid red collision border so it's
-    // unmistakably clear what will kill the snake
+    // Draw each block's text at its original position (cosmetic only)
     blocks.forEach(b => {
       if (!b.alive) return;
       const a=b.hp/b.maxHp;
-
-      // Interior fill — very subtle
-      ctx.globalAlpha=a*0.12; ctx.fillStyle=b.color;
-      ctx.fillRect(b.x,b.y,b.w,b.h);
-
-      // Collision border — bright red, thick, unmissable
-      ctx.globalAlpha=a; ctx.strokeStyle='#f87171'; ctx.lineWidth=2;
-      ctx.strokeRect(b.x+1,b.y+1,b.w-2,b.h-2);
-
-      // Label text in block color
-      ctx.fillStyle=b.color;
+      ctx.globalAlpha=a*0.5; ctx.fillStyle=b.color;
       ctx.font=`${b.fontSize}px 'JetBrains Mono',monospace`;
       ctx.textAlign='center'; ctx.textBaseline='middle';
       ctx.fillText(b.text, b.x+b.w/2, b.y+b.h/2, b.w-4);
       ctx.globalAlpha=1; ctx.textBaseline='alphabetic';
+    });
+
+    // Draw collision grid cells in red — these are the EXACT cells that kill the snake
+    // Collect unique blocks that are still alive
+    const drawnBlocks = new Set();
+    wallGrid.forEach((b, key) => {
+      if (!b.alive || drawnBlocks.has(b)) return;
+      drawnBlocks.add(b);
+      const a=b.hp/b.maxHp;
+      const x1=Math.floor(b.x/SZ), x2=Math.ceil((b.x+b.w)/SZ);
+      const y1=Math.floor(b.y/SZ), y2=Math.ceil((b.y+b.h)/SZ);
+      // Fill
+      ctx.globalAlpha=a*0.1; ctx.fillStyle='#f87171';
+      ctx.fillRect(x1*SZ, y1*SZ, (x2-x1)*SZ, (y2-y1)*SZ);
+      // Red border matches exactly what the collision logic uses
+      ctx.globalAlpha=a; ctx.strokeStyle='#f87171'; ctx.lineWidth=2;
+      ctx.strokeRect(x1*SZ+1, y1*SZ+1, (x2-x1)*SZ-2, (y2-y1)*SZ-2);
     });
 
     // Food
@@ -108,7 +114,7 @@ window.launchSnake = function launchSnake() {
       ctx.fillRect(s.x*SZ+1,s.y*SZ+1,SZ-2,SZ-2);
     });
 
-    // Boundary border — also red so player knows the edge kills too
+    // Outer boundary — red so player knows edges kill too
     ctx.strokeStyle='#f87171'; ctx.lineWidth=2;
     ctx.strokeRect(1,1,W-2,H-2);
   }
