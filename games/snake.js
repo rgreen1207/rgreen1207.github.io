@@ -97,7 +97,7 @@ window.launchSnake = function launchSnake() {
     }
     if (isWall(head.x, head.y)) {
       damageWall(head.x, head.y);
-      end('Crashed into your resume!'); return;
+      end('Blocked by Ryan Green himself!'); return;
     }
 
     snake.unshift(head);
