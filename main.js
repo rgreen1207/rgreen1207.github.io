@@ -1,4 +1,17 @@
     // ════════════════════════════════════════
+    // PIP PACKAGES — add new packages here
+    // ════════════════════════════════════════
+    const pipPackages = [
+      'fastapi-watch',
+      'fastapi-cursor',
+      'fastapi-pulse',
+    ];
+    
+    document.querySelectorAll('#pip-stat-count, #pip-highlight-count').forEach(el => {
+      el.textContent = pipPackages.length;
+    });
+
+    // ════════════════════════════════════════
     // DEVTOOLS CONSOLE MESSAGE
     // ════════════════════════════════════════
     console.log('%c', 'font-size:0');
