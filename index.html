@@ -30,8 +30,9 @@
     <div class="hero-glow"></div>
     <div class="hero-content">
       <div class="hero-eyebrow">Sr. Backend Engineer</div>
-      <h1 class="hero-name">
-        <span class="hero-name-prompt">$</span> Ryan Green<span class="hero-name-cursor"></span>
+      <h1 class="hero-name" id="hero-name">
+        <span class="hero-name-prompt">$</span>
+        <span id="name-ryan"></span><span id="name-green"></span><span class="hero-name-cursor" id="hero-cursor"></span>
       </h1>
       <p class="hero-title">Building systems that scale, ship, and save money</p>
       <p class="hero-summary">
@@ -52,6 +53,10 @@
           <div class="stat">
             <span class="stat-num">60%</span>
             <span class="stat-label">Perf. Improvement</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">15</span>
+            <span class="stat-label">Engineers Led</span>
           </div>
         </div>
         <div class="hero-stats-row row-2">
@@ -456,19 +461,12 @@
       <p>© 2026 Ryan Green — rgreen.dev</p>
       <p>Seattle, WA · ryan@rgreen.dev · (951) 400-1744</p>
     </div>
-    <p>Built with ❤️ and too much coffee</p>
+    <p class="footer-hint" onclick="toggleCLI()">
+      Press <kbd>`</kbd> to open terminal
+    </p>
   </footer>
 
   <script src="script.js"></script>
-
-  <script>
-    // Reveal on scroll
-    const reveals = document.querySelectorAll('.reveal');
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => obs.observe(el));
-  </script>
 
   <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
   <script>
