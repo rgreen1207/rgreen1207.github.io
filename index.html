@@ -1,109 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ryan Green - Sr. Backend Engineer</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ryan Green - Sr. Backend Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;700&family=Outfit:wght@900&family=Syne:wght@600;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="floating-shapes">
-  <div class="shape">💻</div>
-  <div class="shape">⚡</div>
-  <div class="shape">🚀</div>
-</div>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">rgreen<span>.dev</span></div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#packages">Packages</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://ko-fi.com/ryanthedev" target="_blank" style="color:var(--green);">☕ Ko-fi</a></li>
+    </ul>
+  </nav>
 
-<div class="container">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Sr. Backend Engineer</div>
+      <h1 class="hero-name">
+        <span class="hero-name-prompt">$</span> Ryan Green<span class="hero-name-cursor"></span>
+      </h1>
+      <p class="hero-title">Building systems that scale, ship, and save money</p>
+      <p class="hero-summary">
+        10+ years turning complex infrastructure challenges into elegant, production-grade solutions.
+        Specializing in FastAPI, Python, PostgreSQL, and distributed systems — remotely from Seattle, WA.
+      </p>
 
-  <header class="header">
-    <div class="profile-section">
-      <div class="profile-img">
-        <i class="fas fa-code"></i>
-      </div>
-      <div class="profile-text">
-        <h1 class="name">Ryan Green</h1>
-        <p class="title">Sr. Backend Engineer</p>
-      </div>
-    </div>
-    <div class="tagline-container">
-      <p class="tagline typing-effect">Problem solver who turns "impossible" into "deployed"</p>
-    </div>
-    <div class="contact-info">
-      <div class="contact-row">
-        <div class="contact-item">
-          <i class="fas fa-map-marker-alt"></i>
-          Seattle, WA
+      <div class="hero-stats">
+        <div class="hero-stats-row">
+          <div class="stat">
+            <span class="stat-num">10+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">$80K+</span>
+            <span class="stat-label">Annual Cost Saved</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">60%</span>
+            <span class="stat-label">Perf. Improvement</span>
+          </div>
+        </div>
+        <div class="hero-stats-row row-2">
+          <div class="stat">
+            <span class="stat-num">1500+</span>
+            <span class="stat-label">Tests Automated</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">3</span>
+            <span class="stat-label">PyPI Packages</span>
+          </div>
         </div>
       </div>
-      <div class="contact-row">
-        <a href="tel:+19514001744" class="contact-item">
-          <i class="fas fa-phone"></i>
-          (951) 400-1744
-        </a>
-        <a href="mailto:ryan@rgreen.dev" class="contact-item">
-          <i class="fas fa-envelope"></i>
-          ryan@rgreen.dev
-        </a>
+
+      <div class="hero-actions">
+        <a href="mailto:ryan@rgreen.dev" class="btn-primary"><i class="fas fa-envelope"></i> Let's Connect</a>
+        <a href="RyanGreenResume.pdf" class="btn-secondary" download><i class="fas fa-download"></i> Resume</a>
       </div>
-      <div class="contact-row">
-        <a href="https://github.com/rgreen1207" class="contact-item" target="_blank">
-          <i class="fab fa-github"></i>
-          github.com/rgreen1207
+
+      <div class="contact-bar">
+        <a href="https://github.com/rgreen1207" class="contact-link" target="_blank">
+          <i class="fab fa-github"></i> github.com/rgreen1207
         </a>
-        <a href="https://linkedin.com/in/rgreen1207" class="contact-item" target="_blank">
-          <i class="fab fa-linkedin"></i>
-          linkedin.com/in/rgreen1207
+        <a href="https://linkedin.com/in/rgreen1207" class="contact-link" target="_blank">
+          <i class="fab fa-linkedin"></i> linkedin.com/in/rgreen1207
         </a>
-        <a href="https://ko-fi.com/ryanthedev" class="contact-item" target="_blank">
-          <i class="fas fa-coffee"></i>
-          ko-fi.com/ryanthedev
+        <a href="tel:+19514001744" class="contact-link">
+          <i class="fas fa-phone"></i> (951) 400-1744
+        </a>
+        <a href="https://ko-fi.com/ryanthedev" class="contact-link" target="_blank">
+          <i class="fas fa-coffee"></i> ko-fi.com/ryanthedev
         </a>
       </div>
     </div>
-  </header>
+
+    <div class="scroll-indicator">
+      <div class="scroll-mouse"></div>
+      <span>scroll</span>
+    </div>
+  </div>
 
   <!-- ABOUT -->
-  <section class="section fade-in">
-    <h2>Hello! Let me introduce myself</h2>
-    <div class="intro-content">
-      <p class="intro-text">
-        I'm a passionate Senior Backend Engineer with over <strong>10 years of experience</strong> transforming complex technical challenges into elegant, scalable solutions. My journey in software development has been driven by a simple philosophy: <em>build systems that not only work flawlessly but also save companies significant time and money</em>.
-      </p>
-      <p class="intro-text">
-        Throughout my career, I've specialized in <strong>high-performance API development</strong>, <strong>database optimization</strong>, and <strong>cost-effective infrastructure design</strong>. I thrive on taking legacy systems and breathing new life into them—whether that's migrating from expensive third-party services to custom in-house solutions or modernizing Python codebases for better performance and security.
-      </p>
-      <p class="intro-text">
-        Currently based in <strong>Seattle, WA</strong>, I work remotely with teams across the country, bringing a collaborative approach to problem-solving. When I'm not architecting backend systems or mentoring fellow engineers, I enjoy exploring the latest in cloud technologies and contributing to open-source projects.
-      </p>
-      <div class="intro-highlights">
-        <div class="highlight-item">
-          <i class="fas fa-lightbulb"></i>
-          <span>Team leader with experience mentoring engineers to autonomous success</span>
-        </div>
-        <div class="highlight-item">
-          <i class="fas fa-users"></i>
-          <span>Planner for minimalized tech debt and team success</span>
-        </div>
-        <div class="highlight-item">
-          <i class="fas fa-chart-line"></i>
-          <span>Performance optimizer focused on real business impact and cost savings</span>
-        </div>
-        <div class="highlight-item">
-          <i class="fab fa-python"></i>
-          <span>3 open-source pip packages published to PyPI</span>
-        </div>
+  <section id="about" class="reveal">
+    <div class="section-label">About</div>
+    <h2 class="section-title">Hello! Let me introduce myself</h2>
+
+    <div class="highlights">
+      <div class="highlight-card">
+        <div class="highlight-num">10+</div>
+        <div class="highlight-label">Years building high-performance backend systems</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-num">3</div>
+        <div class="highlight-label">Open-source pip packages published to PyPI</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-num">$80K+</div>
+        <div class="highlight-label">Annual infrastructure cost savings delivered</div>
       </div>
     </div>
+
+    <p style="color:var(--text-dim);line-height:1.9;margin-bottom:1.25rem;">
+      I'm a passionate Senior Backend Engineer with over <strong style="color:var(--text)">10 years of experience</strong> transforming complex technical challenges into elegant, scalable solutions. My philosophy is simple: <em>build systems that work flawlessly and save companies significant time and money</em>.
+    </p>
+    <p style="color:var(--text-dim);line-height:1.9;margin-bottom:1.25rem;">
+      Throughout my career I've specialized in <strong style="color:var(--text)">high-performance API development</strong>, <strong style="color:var(--text)">database optimization</strong>, and <strong style="color:var(--text)">cost-effective infrastructure design</strong>. I thrive on taking legacy systems and breathing new life into them — migrating from expensive third-party services to custom in-house solutions and modernizing Python codebases for better performance and security.
+    </p>
+    <p style="color:var(--text-dim);line-height:1.9;">
+      Currently based in <strong style="color:var(--text)">Seattle, WA</strong>, I work remotely with teams across the country, bringing a collaborative approach to every problem. When I'm not architecting backend systems or mentoring engineers, I'm building open-source tools for the FastAPI ecosystem.
+    </p>
   </section>
 
+  <div class="divider"></div>
+
   <!-- OPEN SOURCE PACKAGES -->
-  <section class="section fade-in" id="packages">
-    <h2>Open Source Packages</h2>
-    <p class="intro-text" style="margin-bottom: 1.5rem;">
-      Beyond my professional work, I actively build and maintain open-source Python packages for the FastAPI ecosystem — published on PyPI and free for anyone to use.
+  <section id="packages" class="reveal">
+    <div class="section-label">Open Source</div>
+    <h2 class="section-title">PyPI Packages</h2>
+    <p style="color:var(--text-dim);margin-bottom:2.5rem;line-height:1.8;">
+      Beyond professional work I actively build and maintain open-source Python packages for the FastAPI ecosystem — published on PyPI and free for anyone to use.
     </p>
+
     <div class="packages-grid">
 
       <div class="package-card">
@@ -115,7 +145,7 @@
           </div>
         </div>
         <p class="package-desc">
-          A structured health and readiness check system for FastAPI. Adds <code>/health/live</code>, <code>/health/ready</code>, <code>/health/status</code>, Prometheus metrics, SSE streaming, and a live dashboard — all with a single registry call. Supports PostgreSQL, Redis, Kafka, RabbitMQ, MongoDB, Celery, and more.
+          Structured health and readiness check system for FastAPI. Adds <code>/health/live</code>, <code>/health/ready</code>, <code>/health/status</code>, Prometheus metrics, SSE streaming, and a live dashboard — all with a single registry call. Supports PostgreSQL, Redis, Kafka, RabbitMQ, MongoDB, Celery, and more.
         </p>
         <div class="package-tags">
           <span class="package-tag">Health Checks</span>
@@ -124,12 +154,8 @@
           <span class="package-tag">SSE</span>
         </div>
         <div class="package-links">
-          <a href="https://github.com/rgreen1207/fastapi-watch" target="_blank" class="package-link">
-            <i class="fab fa-github"></i> GitHub
-          </a>
-          <a href="https://pypi.org/project/fastapi-watch/" target="_blank" class="package-link">
-            <i class="fas fa-box"></i> PyPI
-          </a>
+          <a href="https://github.com/rgreen1207/fastapi-watch" target="_blank" class="package-link"><i class="fab fa-github"></i> GitHub</a>
+          <a href="https://pypi.org/project/fastapi-watch/" target="_blank" class="package-link"><i class="fas fa-box"></i> PyPI</a>
         </div>
       </div>
 
@@ -151,12 +177,8 @@
           <span class="package-tag">Performance</span>
         </div>
         <div class="package-links">
-          <a href="https://github.com/rgreen1207/fastapi-cursor" target="_blank" class="package-link">
-            <i class="fab fa-github"></i> GitHub
-          </a>
-          <a href="https://pypi.org/project/fastapi-cursor/" target="_blank" class="package-link">
-            <i class="fas fa-box"></i> PyPI
-          </a>
+          <a href="https://github.com/rgreen1207/fastapi-cursor" target="_blank" class="package-link"><i class="fab fa-github"></i> GitHub</a>
+          <a href="https://pypi.org/project/fastapi-cursor/" target="_blank" class="package-link"><i class="fas fa-box"></i> PyPI</a>
         </div>
       </div>
 
@@ -169,7 +191,7 @@
           </div>
         </div>
         <p class="package-desc">
-          Bridges Celery task lifecycle events to FastAPI Server-Sent Events streams. Clients connect to a single route and receive real-time task progress updates — no polling required. Supports Redis, RabbitMQ, and in-process Memory backends.
+          Bridges Celery task lifecycle events to FastAPI Server-Sent Events streams. Clients connect to a single route and receive real-time task progress — no polling required. Supports Redis, RabbitMQ, and in-process Memory backends.
         </p>
         <div class="package-tags">
           <span class="package-tag">Celery</span>
@@ -178,225 +200,285 @@
           <span class="package-tag">RabbitMQ</span>
         </div>
         <div class="package-links">
-          <a href="https://github.com/rgreen1207/fastapi-pulse" target="_blank" class="package-link">
-            <i class="fab fa-github"></i> GitHub
-          </a>
-          <a href="https://pypi.org/project/fastapi-pulse/" target="_blank" class="package-link">
-            <i class="fas fa-box"></i> PyPI
-          </a>
+          <a href="https://github.com/rgreen1207/fastapi-pulse" target="_blank" class="package-link"><i class="fab fa-github"></i> GitHub</a>
+          <a href="https://pypi.org/project/fastapi-pulse/" target="_blank" class="package-link"><i class="fas fa-box"></i> PyPI</a>
         </div>
       </div>
 
     </div>
   </section>
+
+  <div class="divider"></div>
 
   <!-- EXPERIENCE -->
-  <section class="section fade-in">
-    <h2>Professional Journey</h2>
+  <section id="experience" class="reveal">
+    <div class="section-label">Experience</div>
+    <h2 class="section-title">Professional Journey</h2>
 
-    <div class="experience-item">
-      <div class="company">Get Covered</div>
-      <div class="role">Sr. Backend Engineer</div>
-      <div class="date">June 2024 - Present | Remote</div>
-      <ul class="achievements">
-        <li>Spearheaded migration from Smarty Maps API to self-hosted OpenStreetMap infrastructure, delivering $80K+ annual cost savings through strategic architectural decisions</li>
-        <li>Engineered high-performance FastAPI application with sub-100ms response times using advanced in-memory caching and PostgreSQL optimization techniques</li>
-        <li>Architected WebSocket-enabled data processing pipeline handling 200MB+ nightly JSON ingestion with multi-layer caching and intelligent deduplication</li>
-        <li>Led technical modernization efforts, transitioning from legacy Rails monolith to microservices architecture using Python, FastAPI, and Pydantic</li>
-      </ul>
+    <div class="experience-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-company">Get Covered</div>
+          <div class="exp-dates">Jun 2024 – Present</div>
+          <div class="exp-location">Remote</div>
+        </div>
+        <div>
+          <div class="exp-role">Sr. Backend Engineer</div>
+          <ul class="exp-bullets">
+            <li>Spearheaded migration from Smarty Maps API to self-hosted OpenStreetMap infrastructure, delivering <strong>$80K+ annual cost savings</strong></li>
+            <li>Engineered high-performance FastAPI application with <strong>sub-100ms response times</strong> using advanced in-memory caching and PostgreSQL optimization</li>
+            <li>Architected WebSocket-enabled data processing pipeline handling <strong>200MB+ nightly JSON ingestion</strong> with multi-layer caching and intelligent deduplication</li>
+            <li>Led technical modernization, transitioning from legacy Rails monolith to microservices using Python, FastAPI, and Pydantic</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">FastAPI</span><span class="tag">PostgreSQL</span><span class="tag">WebSockets</span><span class="tag">OpenStreetMap</span><span class="tag">Python</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-company">Blueboard Inc.</div>
+          <div class="exp-dates">Jan 2023 – Oct 2023</div>
+          <div class="exp-location">Remote</div>
+        </div>
+        <div>
+          <div class="exp-role">Backend Python Developer</div>
+          <ul class="exp-bullets">
+            <li>Led cross-functional team of 6 engineers through WSGI-to-FastAPI migration, achieving <strong>60% performance improvement</strong></li>
+            <li>Orchestrated Python 2.7 → 3.11 upgrade initiative, enhancing security and long-term maintainability</li>
+            <li>Designed and implemented AWS-hosted Nominatim geolocation server, optimizing location-based features</li>
+            <li>Optimized 10+ MariaDB databases using SQLAlchemy ORM patterns, delivering <strong>30% query performance improvement</strong></li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">FastAPI</span><span class="tag">Python 3.11</span><span class="tag">SQLAlchemy</span><span class="tag">MariaDB</span><span class="tag">AWS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-company">StartEngine</div>
+          <div class="exp-dates">Jun 2022 – Aug 2022</div>
+          <div class="exp-location">Remote</div>
+        </div>
+        <div>
+          <div class="exp-role">Backend Java Developer (Contract)</div>
+          <ul class="exp-bullets">
+            <li>Migrated critical microservice from Ruby on Rails to Spring Boot within aggressive 2-month timeline</li>
+            <li>Executed seamless MongoDB → PostgreSQL data migration with zero data loss</li>
+            <li>Developed comprehensive technical documentation for legacy applications, improving team onboarding efficiency</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-company">Fair.com</div>
+          <div class="exp-dates">Nov 2018 – Apr 2022</div>
+          <div class="exp-location">Santa Monica, CA</div>
+        </div>
+        <div>
+          <div class="exp-role">SDET</div>
+          <ul class="exp-bullets">
+            <li>Led development of <strong>1500+ test automation suite</strong> covering frontend and internal tooling platforms</li>
+            <li>Transitioned testing infrastructure from Ruby to Python, improving maintainability and team productivity</li>
+            <li>Mentored junior engineers with structured onboarding, achieving autonomous productivity within 6 weeks</li>
+            <li>Established CI/CD testing protocols adopted across the engineering organization</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Python</span><span class="tag">Selenium</span><span class="tag">CI/CD</span><span class="tag">Test Automation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-company">Spokeo</div>
+          <div class="exp-dates">Feb 2017 – Sep 2018</div>
+          <div class="exp-location">Pasadena, CA</div>
+        </div>
+        <div>
+          <div class="exp-role">Software QA Engineer</div>
+          <ul class="exp-bullets">
+            <li>Managed Jenkins infrastructure executing <strong>400+ automated QA tests</strong> for Spokeo API and SEO systems</li>
+            <li>Developed tooling suite reducing regression testing time by <strong>75%</strong></li>
+            <li>Collaborated with cross-functional teams to establish QA standards for web applications</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Jenkins</span><span class="tag">Python</span><span class="tag">QA Automation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-company">InnovaSystems</div>
+          <div class="exp-dates">Aug 2015 – Dec 2016</div>
+          <div class="exp-location">San Diego, CA</div>
+        </div>
+        <div>
+          <div class="exp-role">Software QA Engineer</div>
+          <ul class="exp-bullets">
+            <li>Designed and developed <strong>300+ automated test suites</strong> using C# and Microsoft Test Suite for US Government deployments</li>
+            <li>Implemented comprehensive bug tracking using Visual Studio Online, improving issue resolution time</li>
+            <li>Partnered with developers to identify optimization opportunities for government-use applications</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">C#</span><span class="tag">Microsoft Test Suite</span><span class="tag">Government</span>
+          </div>
+        </div>
+      </div>
+
     </div>
-
-    <div class="experience-item">
-      <div class="company">Blueboard Inc.</div>
-      <div class="role">Backend Python Developer</div>
-      <div class="date">January 2023 - October 2023 | Remote</div>
-      <ul class="achievements">
-        <li>Led cross-functional team of 6 engineers through critical WSGI-to-FastAPI migration, achieving 60% performance improvement across all endpoints</li>
-        <li>Orchestrated comprehensive Python 2.7 to 3.11 upgrade initiative, enhancing security posture and long-term maintainability</li>
-        <li>Designed and implemented AWS-hosted Nominatim geolocation server, optimizing location-based features and system scalability</li>
-        <li>Optimized 10+ MariaDB databases using SQLAlchemy ORM patterns, delivering 30% query performance improvement and reduced resource consumption</li>
-      </ul>
-    </div>
-
-    <div class="experience-item">
-      <div class="company">StartEngine</div>
-      <div class="role">Backend Java Developer (Contract)</div>
-      <div class="date">June 2022 - August 2022 | Remote</div>
-      <ul class="achievements">
-        <li>Successfully migrated critical microservice from Ruby on Rails to Spring Boot within aggressive 2-month timeline</li>
-        <li>Executed seamless MongoDB-to-PostgreSQL data migration ensuring zero data loss and improved query performance</li>
-        <li>Developed comprehensive technical documentation for legacy applications, improving team knowledge transfer and onboarding efficiency</li>
-      </ul>
-    </div>
-
-    <div class="experience-item">
-      <div class="company">Fair.com</div>
-      <div class="role">Software Development Engineer in Test (SDET)</div>
-      <div class="date">November 2018 - April 2022 | Santa Monica, CA</div>
-      <ul class="achievements">
-        <li>Led development of comprehensive 1500+ test automation suite covering frontend website and internal tooling platforms</li>
-        <li>Successfully transitioned testing infrastructure from Ruby to Python, improving code maintainability and team productivity</li>
-        <li>Mentored junior engineers with structured onboarding program, achieving autonomous productivity within 6-week timeline</li>
-        <li>Established CI/CD testing protocols and quality assurance standards adopted across engineering organization</li>
-      </ul>
-    </div>
-
-    <div class="experience-item">
-      <div class="company">Spokeo</div>
-      <div class="role">Software QA Engineer</div>
-      <div class="date">February 2017 - September 2018 | Pasadena, CA</div>
-      <ul class="achievements">
-        <li>Managed Jenkins infrastructure to execute 400+ automated QA tests for Spokeo API and SEO systems, ensuring consistent product reliability and performance across all releases</li>
-        <li>Developed comprehensive tooling suite to support developers during regression testing cycles, reducing testing time by 75% and improving accuracy in bug identification</li>
-        <li>Collaborated with cross-functional teams to establish quality assurance standards and testing protocols for web applications</li>
-      </ul>
-    </div>
-
-    <div class="experience-item">
-      <div class="company">InnovaSystems International, LLC</div>
-      <div class="role">Software QA Engineer</div>
-      <div class="date">August 2015 - December 2016 | San Diego, CA</div>
-      <ul class="achievements">
-        <li>Partnered with developers and product owners to analyze website performance metrics and identify optimization opportunities for government-use applications</li>
-        <li>Designed and developed 300+ automated test suites using C# and Microsoft Test Suite, ensuring security and reliability standards for US Government deployments</li>
-        <li>Implemented comprehensive bug tracking and reporting system using Visual Studio Online, improving team communication and issue resolution time</li>
-      </ul>
-    </div>
-
   </section>
 
-  <section class="section fade-in">
-    <h2>Technical Expertise</h2>
+  <div class="divider"></div>
+
+  <!-- SKILLS -->
+  <section id="skills" class="reveal">
+    <div class="section-label">Skills</div>
+    <h2 class="section-title">Technical Expertise</h2>
+
     <div class="skills-grid">
-
-      <div class="skill-category">
-        <h3><i class="fas fa-code"></i> Backend Frameworks</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Ruby on Rails</span>
-          <span class="skill-tag">FastAPI</span>
-          <span class="skill-tag">Django</span>
-          <span class="skill-tag">Flask</span>
-          <span class="skill-tag">Java Spring</span>
+      <div class="skill-group">
+        <div class="skill-group-name">Backend Frameworks</div>
+        <div class="skill-pills">
+          <span class="skill-pill">FastAPI</span>
+          <span class="skill-pill">Django</span>
+          <span class="skill-pill">Flask</span>
+          <span class="skill-pill">Ruby on Rails</span>
+          <span class="skill-pill">Java Spring</span>
         </div>
       </div>
-
-      <div class="skill-category">
-        <h3><i class="fas fa-cogs"></i> Backend Technologies</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Websockets</span>
-          <span class="skill-tag">Pydantic</span>
-          <span class="skill-tag">SQLAlchemy</span>
-          <span class="skill-tag">Pandas</span>
-          <span class="skill-tag">NumPy</span>
-          <span class="skill-tag">Caching</span>
+      <div class="skill-group">
+        <div class="skill-group-name">Backend Technologies</div>
+        <div class="skill-pills">
+          <span class="skill-pill">WebSockets</span>
+          <span class="skill-pill">Pydantic</span>
+          <span class="skill-pill">SQLAlchemy</span>
+          <span class="skill-pill">Pandas</span>
+          <span class="skill-pill">NumPy</span>
+          <span class="skill-pill">Caching</span>
+          <span class="skill-pill">SSE</span>
         </div>
       </div>
-
-      <div class="skill-category">
-        <h3><i class="fas fa-code-branch"></i> Version Control & Collaboration</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">GitHub</span>
-          <span class="skill-tag">GitLab</span>
-          <span class="skill-tag">Bitbucket</span>
-          <span class="skill-tag">JIRA</span>
-          <span class="skill-tag">Confluence</span>
+      <div class="skill-group">
+        <div class="skill-group-name">Databases & Storage</div>
+        <div class="skill-pills">
+          <span class="skill-pill">PostgreSQL</span>
+          <span class="skill-pill">MySQL</span>
+          <span class="skill-pill">MariaDB</span>
+          <span class="skill-pill">MongoDB</span>
+          <span class="skill-pill">Redis</span>
+          <span class="skill-pill">Elasticsearch</span>
+          <span class="skill-pill">GraphQL</span>
+          <span class="skill-pill">Alembic</span>
         </div>
       </div>
-
-      <div class="skill-category">
-        <h3><i class="fas fa-database"></i> Databases & Storage</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">PostgreSQL</span>
-          <span class="skill-tag">MySQL</span>
-          <span class="skill-tag">MariaDB</span>
-          <span class="skill-tag">MongoDB</span>
-          <span class="skill-tag">GraphQL</span>
-          <span class="skill-tag">Alembic</span>
-          <span class="skill-tag">Redis</span>
-          <span class="skill-tag">Elasticsearch</span>
+      <div class="skill-group">
+        <div class="skill-group-name">Cloud & DevOps</div>
+        <div class="skill-pills">
+          <span class="skill-pill">AWS EC2</span>
+          <span class="skill-pill">S3</span>
+          <span class="skill-pill">Docker</span>
+          <span class="skill-pill">Terraform</span>
+          <span class="skill-pill">Jenkins</span>
+          <span class="skill-pill">GitHub Actions</span>
+          <span class="skill-pill">Datadog</span>
+          <span class="skill-pill">New Relic</span>
         </div>
       </div>
-
-      <div class="skill-category">
-        <h3><i class="fas fa-cloud"></i> Cloud Infrastructure</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">EC2</span>
-          <span class="skill-tag">S3</span>
-          <span class="skill-tag">Terraform</span>
-          <span class="skill-tag">Docker</span>
-          <span class="skill-tag">Jenkins</span>
-          <span class="skill-tag">GitHub Actions</span>
-          <span class="skill-tag">Datadog</span>
-          <span class="skill-tag">New Relic</span>
+      <div class="skill-group">
+        <div class="skill-group-name">Testing & Quality</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Pytest</span>
+          <span class="skill-pill">Playwright</span>
+          <span class="skill-pill">Selenium</span>
+          <span class="skill-pill">Postman</span>
+          <span class="skill-pill">Swagger/OpenAPI</span>
+          <span class="skill-pill">CI/CD</span>
         </div>
       </div>
-
-      <div class="skill-category">
-        <h3><i class="fas fa-vial"></i> Testing & Quality</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Pytest</span>
-          <span class="skill-tag">Postman</span>
-          <span class="skill-tag">Swagger/OpenAPI</span>
-          <span class="skill-tag">Playwright</span>
-          <span class="skill-tag">Selenium</span>
-          <span class="skill-tag">Test Automation</span>
-          <span class="skill-tag">CI/CD</span>
+      <div class="skill-group">
+        <div class="skill-group-name">Collaboration</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">GitHub</span>
+          <span class="skill-pill">GitLab</span>
+          <span class="skill-pill">Bitbucket</span>
+          <span class="skill-pill">JIRA</span>
+          <span class="skill-pill">Confluence</span>
         </div>
       </div>
-
     </div>
   </section>
 
-  <section class="section fade-in">
-    <h2>Education & Foundation</h2>
-    <div class="experience-item">
-      <div class="company">California State University, Monterey Bay</div>
-      <div class="role">Bachelor of Science - Computer Science & Software Engineering</div>
-      <div class="date">August 2011 - May 2016</div>
-      <ul class="achievements">
-        <li>Comprehensive curriculum covering algorithms, data structures, software engineering principles, and system design</li>
-        <li>Hands-on experience with multiple programming languages and development methodologies</li>
-        <li>Strong foundation in computer science theory and practical application development</li>
-      </ul>
+  <div class="divider"></div>
+
+  <!-- EDUCATION -->
+  <section class="reveal">
+    <div class="section-label">Education</div>
+    <h2 class="section-title">Foundation</h2>
+    <div class="edu-card">
+      <div class="edu-school">California State University, Monterey Bay</div>
+      <div class="edu-dates">Aug 2011 – May 2016</div>
+      <div class="edu-degree">Bachelor of Science — Computer Science &amp; Software Engineering</div>
+      <div class="edu-degree">Algorithms, data structures, software engineering principles, and system design</div>
+      <div class="edu-degree">Strong foundation in computer science theory and practical application development</div>
     </div>
   </section>
 
-  <div class="cta-section fade-in">
-    <h2>Ready to Scale Your Backend?</h2>
-    <p>I specialize in transforming legacy systems into high-performance, cost-effective solutions. Let's discuss how I can help optimize your infrastructure and save your company significant operational costs.</p>
-    <div class="cta-buttons">
-      <a href="mailto:ryan@rgreen.dev" class="cta-button">
-        <i class="fas fa-envelope"></i> Let's Connect
-      </a>
-      <a href="RyanGreenResume.pdf" class="cta-button" download>
-        <i class="fas fa-download"></i> Download Resume
-      </a>
-      <a href="https://github.com/rgreen1207" class="cta-button" target="_blank">
-        <i class="fab fa-github"></i> View My Code
-      </a>
-      <a href="https://linkedin.com/in/rgreen1207" class="cta-button" target="_blank">
-        <i class="fab fa-linkedin"></i> Professional Profile
-      </a>
-      <a href="https://ko-fi.com/ryanthedev" class="cta-button" target="_blank">
-        <i class="fas fa-coffee"></i> Support on Ko-fi
-      </a>
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <div id="contact" class="cta-section reveal">
+    <div class="cta-inner">
+      <h2>Ready to Scale Your Backend?</h2>
+      <p>I specialize in transforming legacy systems into high-performance, cost-effective solutions. Let's discuss how I can help optimize your infrastructure and save your company significant operational costs.</p>
+      <div class="cta-buttons">
+        <a href="mailto:ryan@rgreen.dev" class="btn-primary"><i class="fas fa-envelope"></i> Let's Connect</a>
+        <a href="RyanGreenResume.pdf" class="btn-secondary" download><i class="fas fa-download"></i> Download Resume</a>
+        <a href="https://github.com/rgreen1207" class="btn-secondary" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://linkedin.com/in/rgreen1207" class="btn-secondary" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="https://ko-fi.com/ryanthedev" class="btn-secondary" target="_blank"><i class="fas fa-coffee"></i> Ko-fi</a>
+      </div>
     </div>
   </div>
 
-</div>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">
+      <p>© 2026 Ryan Green — rgreen.dev</p>
+      <p>Seattle, WA · ryan@rgreen.dev · (951) 400-1744</p>
+    </div>
+    <p>Built with ❤️ and too much coffee</p>
+  </footer>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 
-<script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-<script>
-  kofiWidgetOverlay.draw('ryanthedev', {
-    'type': 'floating-chat',
-    'floating-chat.donateButton.text': 'Support me',
-    'floating-chat.donateButton.background-color': '#00b9fe',
-    'floating-chat.donateButton.text-color': '#fff'
-  });
-</script>
+  <script>
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => obs.observe(el));
+  </script>
+
+  <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+  <script>
+    kofiWidgetOverlay.draw('ryanthedev', {
+      'type': 'floating-chat',
+      'floating-chat.donateButton.text': 'Support me',
+      'floating-chat.donateButton.background-color': '#00b9fe',
+      'floating-chat.donateButton.text-color': '#fff'
+    });
+  </script>
 
 </body>
 </html>
