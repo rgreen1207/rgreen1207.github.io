@@ -775,3 +775,99 @@
       .skill-group { padding: 1.25rem 1.5rem; }
       .scroll-indicator { display: none; }
     }
+
+    /* ── Open Source Packages ── */
+    
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    
+    .package-card {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    
+    .package-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+    
+    .package-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    
+    .package-card-icon {
+      font-size: 1.3rem;
+      opacity: 0.75;
+      flex-shrink: 0;
+    }
+    
+    .package-card-name {
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: monospace;
+    }
+    
+    .package-card-install {
+      font-size: 0.75rem;
+      font-family: monospace;
+      opacity: 0.5;
+      margin-top: 2px;
+    }
+    
+    .package-card-desc {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      opacity: 0.7;
+      flex-grow: 1;
+    }
+    
+    .package-card-desc code {
+      font-family: monospace;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+    
+    .package-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    
+    .package-tag {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      opacity: 0.7;
+    }
+    
+    .package-card-links {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.25rem;
+    }
+    
+    .package-card-link {
+      font-size: 0.8rem;
+      text-decoration: none;
+      opacity: 0.6;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: opacity 0.2s;
+    }
+    
+    .package-card-link:hover {
+      opacity: 1;
+    }
