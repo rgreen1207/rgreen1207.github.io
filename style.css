@@ -837,6 +837,7 @@ footer p {
   background: var(--green-dim);
   padding: 1px 5px;
   border: 1px solid rgba(74,222,128,0.2);
+  white-space: nowrap;
 }
 
 .package-card-tags {
